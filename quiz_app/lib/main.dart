@@ -8,7 +8,14 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Text('Hello world!'),
+      home: Scaffold(
+        body: Center(
+          child: Text('Hello World!'),
+        ),
+        appBar: AppBar(
+          title: Text('Quiz App'),
+        ),
+      ),
     );
   }
 }

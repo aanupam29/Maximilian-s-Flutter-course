@@ -10,6 +10,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _questionIndex = 0;
+  List questions = [
+    'What\'s your favorite color?',
+    'What\'s your favorite animal?',
+    'What\'s your favorite drink?',
+  ];
 
   void _onAnswerSelected(BuildContext context) {
     setState(() {
@@ -17,22 +22,16 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  Widget _renderText() {
+    String question = _questionIndex < questions.length
+        ? questions[_questionIndex]
+        : 'Question not found!';
+
+    return Question(question);
+  }
+
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite drink?',
-    ];
-
-    Widget _renderText() {
-      String question = _questionIndex < questions.length
-          ? questions[_questionIndex]
-          : 'Question not found!';
-
-      return Question(question);
-    }
-
     return MaterialApp(
       home: Scaffold(
         body: Column(

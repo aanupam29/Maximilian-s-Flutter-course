@@ -10,7 +10,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _questionIndex = 0;
-  List questions = [
+  final List questions = [
     'What\'s your favorite color?',
     'What\'s your favorite animal?',
     'What\'s your favorite drink?',
@@ -36,9 +36,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
         body: Column(
           children: <Widget>[
-            Center(
-              child: _renderText(),
-            ),
+            _renderText(),
             RaisedButton(
               child: Text('Change question!'),
               onPressed: () => _onAnswerSelected(context),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/question.dart';
 
 void main() => runApp(MainPage());
 
@@ -8,11 +9,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int questionIndex = 0;
+  int _questionIndex = 0;
 
   void _onAnswerSelected(BuildContext context) {
     setState(() {
-      questionIndex = questionIndex + 1;
+      _questionIndex = _questionIndex + 1;
     });
   }
 
@@ -25,9 +26,11 @@ class _MainPageState extends State<MainPage> {
     ];
 
     Widget _renderText() {
-      return questionIndex < questions.length
-          ? Text(questions[questionIndex])
-          : Text('Question not found!');
+      String question = _questionIndex < questions.length
+          ? questions[_questionIndex]
+          : 'Question not found!';
+
+      return Question(question);
     }
 
     return MaterialApp(

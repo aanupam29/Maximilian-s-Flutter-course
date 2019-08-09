@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/answer.dart';
+import 'package:quiz_app/classes/QuestionWithAnswers.dart';
 import 'package:quiz_app/question.dart';
 
 void main() => runApp(MainPage());
@@ -10,24 +12,49 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _questionIndex = 0;
-  final List questions = [
-    'What\'s your favorite color?',
-    'What\'s your favorite animal?',
-    'What\'s your favorite drink?',
+  final List<QuestionWithAnswers> _questions = [
+    QuestionWithAnswers(
+        question: 'What\'s your favorite Color?',
+        answers: ['Blue', 'Yellow', 'Other']),
+    QuestionWithAnswers(
+        question: 'What\'s your favorite Animal?',
+        answers: ['Cat', 'Dog', 'Other']),
+    QuestionWithAnswers(
+        question: 'What\'s your favorite Food?',
+        answers: ['Hamburger', 'Pizze', 'Other']),
   ];
 
-  void _onAnswerSelected(BuildContext context) {
+  void onAnswerSelected() {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
   }
 
   Widget _renderText() {
-    String question = _questionIndex < questions.length
-        ? questions[_questionIndex]
+    String question = _questionIndex < _questions.length
+        ? _questions[_questionIndex].question
         : 'Question not found!';
 
     return Question(question);
+  }
+
+  Widget _renderAnswers() {
+    final QuestionWithAnswers _question =
+        _questions.length < _questionIndex ? _questions[_questionIndex] : null;
+    List<Widget> answers = [];
+
+    if (_question != null) {
+      for (var i = 0; i < _question.answers.length; i++) {
+        answers.add(Answer(
+          onPress: onAnswerSelected,
+          answer: _question.answers[i],
+        ));
+      }
+    }
+
+    return Column(
+      children: answers,
+    );
   }
 
   @override
@@ -35,13 +62,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         body: Column(
-          children: <Widget>[
-            _renderText(),
-            RaisedButton(
-              child: Text('Change question!'),
-              onPressed: () => _onAnswerSelected(context),
-            )
-          ],
+          children: <Widget>[_renderText(), _renderAnswers()],
         ),
         appBar: AppBar(
           title: Text('Quiz App'),

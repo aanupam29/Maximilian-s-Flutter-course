@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
 
   Widget _renderAnswers() {
     final QuestionWithAnswers _question =
-        _questions.length < _questionIndex ? _questions[_questionIndex] : null;
+        _questionIndex < _questions.length ? _questions[_questionIndex] : null;
     List<Widget> answers = [];
 
     if (_question != null) {

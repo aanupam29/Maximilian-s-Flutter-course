@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _questionIndex = 0;
-  final List<QuestionWithAnswers> _questions = [
+  List<QuestionWithAnswers> _questions = [
     QuestionWithAnswers(
         question: 'What\'s your favorite Color?',
         answers: ['Blue', 'Yellow', 'Other']),
@@ -30,12 +30,26 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  void _resetQuiz() {
+    setState(() {
+      _questions = _questions.map((question) {
+        return QuestionWithAnswers(
+            answers: question.answers, question: question.question);
+      }).toList();
+      _questionIndex = 0;
+    });
+  }
+
   Widget _renderText() {
     String question = _questionIndex < _questions.length
         ? _questions[_questionIndex].question
-        : 'Question not found!';
+        : null;
 
-    return Question(question);
+    if (question != null) {
+      return Question(question);
+    } else {
+      return _renderSelectedAnswers();
+    }
   }
 
   Widget _renderAnswers() {
@@ -57,6 +71,10 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  Widget _renderSelectedAnswers() {
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,6 +84,13 @@ class _MainPageState extends State<MainPage> {
         ),
         appBar: AppBar(
           title: Text('Quiz App'),
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: _resetQuiz,
+            ),
+          ],
         ),
       ),
     );

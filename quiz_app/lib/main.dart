@@ -15,16 +15,19 @@ class _MainPageState extends State<MainPage> {
   List<QuestionWithAnswers> _questions = [
     QuestionWithAnswers(
         question: 'What\'s your favorite Color?',
-        answers: ['Blue', 'Yellow', 'Other']),
+        answers: ['Blue', 'Yellow', 'Pink']),
     QuestionWithAnswers(
         question: 'What\'s your favorite Animal?',
-        answers: ['Cat', 'Dog', 'Other']),
+        answers: ['Cat', 'Dog', 'Bird']),
     QuestionWithAnswers(
         question: 'What\'s your favorite Food?',
-        answers: ['Hamburger', 'Pizze', 'Other']),
+        answers: ['Hamburger', 'Pizza', 'Lasagna']),
   ];
 
-  void onAnswerSelected() {
+  void onAnswerSelected(int answerIndex) {
+    QuestionWithAnswers actualQuestion = _questions[_questionIndex];
+    actualQuestion.setAnswer(actualQuestion.answers[answerIndex]);
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -60,7 +63,7 @@ class _MainPageState extends State<MainPage> {
     if (_question != null) {
       for (var i = 0; i < _question.answers.length; i++) {
         answers.add(Answer(
-          onPress: onAnswerSelected,
+          onPress: () => onAnswerSelected(i),
           answer: _question.answers[i],
         ));
       }
@@ -72,7 +75,31 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _renderSelectedAnswers() {
-    return Container();
+    return Center(
+      child: Column(children: <Widget>[
+        Text(
+          'Selected Answers',
+          style: TextStyle(fontSize: 20),
+        ),
+        ..._questions.map((question) {
+          return Text(
+            question.question + ' ' + question.answer,
+            style: TextStyle(fontSize: 15),
+          );
+        }).toList(),
+      ]),
+    );
+  }
+
+  Widget _renderResetAction() {
+    if (_questionIndex > 0) {
+      return IconButton(
+        icon: Icon(Icons.cached),
+        onPressed: _resetQuiz,
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
@@ -85,11 +112,8 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Quiz App'),
           actions: <Widget>[
+            _renderResetAction()
             // action button
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: _resetQuiz,
-            ),
           ],
         ),
       ),

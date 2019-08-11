@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class Transaction {
   final String id;
@@ -12,4 +13,9 @@ class Transaction {
     @required this.amount,
     @required this.description,
   });
+
+  String getDate() {
+    DateFormat formater = DateFormat.Hm();
+    return formater.format(date);
+  }
 }

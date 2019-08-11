@@ -22,7 +22,10 @@ class PriceTag extends StatelessWidget {
             ),
             child: Text(
               '\$ ' + amount.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.green[800],
+              ),
             ),
           ),
         ],

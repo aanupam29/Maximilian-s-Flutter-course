@@ -58,10 +58,16 @@ class MyHomePage extends StatelessWidget {
                 return Card(
                   child: ListTile(
                     leading: PriceTag(transaction.amount),
-                    title: Text(transaction.description),
-                    subtitle: Text(transaction.date.hour.toString() +
-                        ':' +
-                        transaction.date.minute.toString()),
+                    title: Text(
+                      transaction.description,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      transaction.getDate(),
+                      style: TextStyle(color: Colors.grey),
+                    ),
                     trailing: Icon(
                       Icons.remove_circle_outline,
                       color: Colors.red,

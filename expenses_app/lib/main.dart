@@ -1,4 +1,5 @@
 import 'package:expenses_app/models/Transaction.dart';
+import 'package:expenses_app/widgets/PriceTag.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -56,15 +57,7 @@ class MyHomePage extends StatelessWidget {
               ...transactions.map((transaction) {
                 return Card(
                   child: ListTile(
-                    leading: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '\$' + transaction.amount.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                    leading: PriceTag(transaction.amount),
                     title: Text(transaction.description),
                     subtitle: Text(transaction.date.hour.toString() +
                         ':' +

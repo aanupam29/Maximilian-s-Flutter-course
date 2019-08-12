@@ -1,5 +1,8 @@
 import 'package:expenses_app/models/Transaction.dart';
+import 'package:expenses_app/widgets/Chart.dart';
 import 'package:expenses_app/widgets/PriceTag.dart';
+import 'package:expenses_app/widgets/TransactionForm.dart';
+import 'package:expenses_app/widgets/TransactionList.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -34,11 +37,6 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
-  // String description;
-  // String amount;
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,65 +46,10 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              color: Colors.orange,
-              child: Text('CHART'),
-              width: double.infinity,
-            ),
-            elevation: 5,
-          ),
-          Card(
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Description'),
-                    controller: descriptionController,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Amount'),
-                    controller: amountController,
-                  ),
-                  FlatButton(
-                    child: Text('Add Transaction'),
-                    textColor: Colors.orange,
-                    onPressed: () {
-                      print(amountController.text);
-                      print(descriptionController.text);
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              ...transactions.map((transaction) {
-                return Card(
-                  child: ListTile(
-                    leading: PriceTag(transaction.amount),
-                    title: Text(
-                      transaction.description,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      transaction.getDate(),
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    trailing: Icon(
-                      Icons.remove_circle_outline,
-                      color: Colors.red,
-                    ),
-                  ),
-                );
-              }).toList()
-            ],
+          Chart(),
+          TransactionForm(),
+          TransactionList(
+            transactions: transactions,
           ),
         ],
       ),

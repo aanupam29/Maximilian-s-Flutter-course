@@ -21,7 +21,7 @@ class PriceTag extends StatelessWidget {
                   Border.all(style: BorderStyle.solid, color: Colors.black38),
             ),
             child: Text(
-              '\$ ' + amount.toString(),
+              "\$ $amount",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.green[800],

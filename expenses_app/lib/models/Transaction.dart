@@ -15,7 +15,7 @@ class Transaction {
   });
 
   String getDate() {
-    DateFormat formater = DateFormat.Hm();
+    DateFormat formater = DateFormat.yMMMd();
     return formater.format(date);
   }
 }

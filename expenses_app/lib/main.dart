@@ -3,6 +3,7 @@ import 'package:expenses_app/widgets/Chart.dart';
 import 'package:expenses_app/widgets/PriceTag.dart';
 import 'package:expenses_app/widgets/TransactionForm.dart';
 import 'package:expenses_app/widgets/TransactionList.dart';
+import 'package:expenses_app/widgets/Transactions.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -40,19 +41,11 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Chart(),
-          TransactionForm(),
-          TransactionList(
-            transactions: transactions,
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Personal Expenses'),
+        ),
+        body: Transactions(
+          transactions: transactions,
+        ));
   }
 }

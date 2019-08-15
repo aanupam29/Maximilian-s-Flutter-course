@@ -25,7 +25,7 @@ class _TransactionsState extends State<Transactions> {
     ),
   ];
 
-  void addTransaction(Transaction transaction) {
+  void _addTransaction(Transaction transaction) {
     setState(() {
       transactions.add(transaction);
     });
@@ -37,7 +37,7 @@ class _TransactionsState extends State<Transactions> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Chart(),
-        TransactionForm(addTransaction: addTransaction),
+        TransactionForm(addTransaction: _addTransaction),
         TransactionList(
           transactions: transactions,
         ),

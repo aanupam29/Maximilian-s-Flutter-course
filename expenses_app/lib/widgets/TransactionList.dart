@@ -10,30 +10,29 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView(
-        children: [
-          ...transactions.map((transaction) {
-            return Card(
-              child: ListTile(
-                leading: PriceTag(transaction.amount),
-                title: Text(
-                  transaction.description,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text(
-                  transaction.getDate(),
-                  style: TextStyle(color: Colors.grey),
-                ),
-                trailing: Icon(
-                  Icons.remove_circle_outline,
-                  color: Colors.red,
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: ListTile(
+              leading: PriceTag(transactions[index].amount),
+              title: Text(
+                transactions[index].description,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            );
-          }).toList()
-        ],
+              subtitle: Text(
+                transactions[index].getDate(),
+                style: TextStyle(color: Colors.grey),
+              ),
+              trailing: Icon(
+                Icons.remove_circle_outline,
+                color: Colors.red,
+              ),
+            ),
+          );
+        },
+        itemCount: transactions.length,
       ),
     );
   }

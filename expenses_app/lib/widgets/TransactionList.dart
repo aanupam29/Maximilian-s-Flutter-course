@@ -12,14 +12,6 @@ class TransactionList extends StatelessWidget {
     return Expanded(
       child: ListView(
         children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              'Your Transactions',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            alignment: Alignment(0, 0),
-          ),
           ...transactions.map((transaction) {
             return Card(
               child: ListTile(

@@ -23,29 +23,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 'osdij89',
-      description: 'New shoes',
-      amount: 49.89,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '8273uc981n3',
-      description: 'Lunch',
-      amount: 12.99,
-      date: DateTime.now(),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Personal Expenses'),
         ),
-        body: Transactions(
-          transactions: transactions,
-        ));
+        body: Transactions());
   }
 }

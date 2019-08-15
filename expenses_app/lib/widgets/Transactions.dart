@@ -5,23 +5,41 @@ import 'package:expenses_app/widgets/TransactionList.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatefulWidget {
-  final List<Transaction> transactions;
-  Transactions({Key key, this.transactions}) : super(key: key);
-
   @override
   _TransactionsState createState() => _TransactionsState();
 }
 
 class _TransactionsState extends State<Transactions> {
+  List<Transaction> transactions = [
+    Transaction(
+      id: 'osdij89',
+      description: 'New shoes',
+      amount: 49.89,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: '8273uc981n3',
+      description: 'Lunch',
+      amount: 12.99,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void addTransaction(Transaction transaction) {
+    setState(() {
+      transactions.add(transaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Chart(),
-        TransactionForm(),
+        TransactionForm(addTransaction: addTransaction),
         TransactionList(
-          transactions: widget.transactions,
+          transactions: transactions,
         ),
       ],
     );

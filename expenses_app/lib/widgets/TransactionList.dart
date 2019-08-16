@@ -14,7 +14,7 @@ class TransactionList extends StatelessWidget {
         itemBuilder: (ctx, index) {
           return Card(
             child: ListTile(
-              leading: PriceTag(transactions[index].amount),
+              leading: PriceTag(transactions[index].getAmount()),
               title: Text(
                 transactions[index].description,
                 style: TextStyle(

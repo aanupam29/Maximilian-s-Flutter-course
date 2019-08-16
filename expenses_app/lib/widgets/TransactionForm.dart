@@ -26,6 +26,7 @@ class TransactionForm extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) {
                 handleSubmit();
               },

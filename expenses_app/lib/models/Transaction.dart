@@ -18,4 +18,8 @@ class Transaction {
     DateFormat formater = DateFormat.yMMMd();
     return formater.format(date);
   }
+
+  String getAmount() {
+    return amount.toStringAsFixed(2);
+  }
 }

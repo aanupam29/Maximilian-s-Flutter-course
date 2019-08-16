@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PriceTag extends StatelessWidget {
-  final double amount;
+  final String amount;
 
   PriceTag(this.amount);
 

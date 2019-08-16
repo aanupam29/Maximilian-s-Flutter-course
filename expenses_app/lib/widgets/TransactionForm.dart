@@ -19,28 +19,39 @@ class TransactionForm extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Description'),
               controller: descriptionController,
+              onSubmitted: (_) {
+                handleSubmit();
+              },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              onSubmitted: (_) {
+                handleSubmit();
+              },
             ),
             FlatButton(
               child: Text('Add Transaction'),
               textColor: Colors.orange,
-              onPressed: () {
-                Transaction newTransaction = new Transaction(
-                  amount: double.parse(amountController.text),
-                  date: DateTime.now(),
-                  description: descriptionController.text,
-                  id: 'aopsdjasod',
-                );
-
-                addTransaction(newTransaction);
-              },
+              onPressed: handleSubmit,
             )
           ],
         ),
       ),
     );
+  }
+
+  void handleSubmit() {
+    if (amountController.text.trim().length > 0 &&
+        descriptionController.text.trim().length > 0) {
+      Transaction newTransaction = new Transaction(
+        amount: double.parse(amountController.text),
+        date: DateTime.now(),
+        description: descriptionController.text,
+        id: 'aopsdjasod',
+      );
+
+      addTransaction(newTransaction);
+    }
   }
 }

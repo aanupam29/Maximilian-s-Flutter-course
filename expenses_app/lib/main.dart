@@ -22,13 +22,64 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<Transaction> transactions = [
+    Transaction(
+      id: 'osdij89',
+      description: 'New shoes',
+      amount: 49.89,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: '8273uc981n3',
+      description: 'Lunch',
+      amount: 12.99,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void _addTransaction(Transaction transaction) {
+    setState(() {
+      transactions.add(transaction);
+    });
+  }
+
+  void _showAddTransactionModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builderContext) {
+        return TransactionForm(
+          addTransaction: _addTransaction,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Personal Expenses'),
-        ),
-        body: Transactions());
+      appBar: AppBar(
+        title: Text('Personal Expenses'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _showAddTransactionModal(context),
+          )
+        ],
+      ),
+      body: Transactions(
+        transactions: transactions,
+        addTransaction: _addTransaction,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _showAddTransactionModal(context),
+      ),
+    );
   }
 }

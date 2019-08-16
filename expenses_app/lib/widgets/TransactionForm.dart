@@ -1,12 +1,18 @@
 import 'package:expenses_app/models/Transaction.dart';
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
   TransactionForm({this.addTransaction});
 
+  final Function addTransaction;
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
-  final Function addTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +22,15 @@ class TransactionForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
+            Container(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                'Add a new transaction!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             TextField(
               decoration: InputDecoration(labelText: 'Description'),
               controller: descriptionController,
@@ -52,7 +67,8 @@ class TransactionForm extends StatelessWidget {
         id: 'aopsdjasod',
       );
 
-      addTransaction(newTransaction);
+      widget.addTransaction(newTransaction);
+      Navigator.of(context).pop();
     }
   }
 }

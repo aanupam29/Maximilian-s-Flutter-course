@@ -41,6 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  void _removeTransaction(int index) {
+    setState(() {
+      transactions.removeAt(index);
+    });
+  }
+
   void _addTransaction(Transaction transaction) {
     setState(() {
       transactions.add(transaction);
@@ -73,9 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Transactions(
         transactions: transactions,
         addTransaction: _addTransaction,
+        removeTransaction: _removeTransaction,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+        ),
         onPressed: () => _showAddTransactionModal(context),
       ),
     );

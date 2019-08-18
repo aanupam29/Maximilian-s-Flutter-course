@@ -9,8 +9,13 @@ import 'package:flutter/material.dart';
 class Transactions extends StatelessWidget {
   final List<Transaction> transactions;
   final Function addTransaction;
+  final Function removeTransaction;
 
-  Transactions({this.transactions, this.addTransaction});
+  Transactions({
+    this.transactions,
+    this.addTransaction,
+    this.removeTransaction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +29,7 @@ class Transactions extends StatelessWidget {
               ),
               TransactionList(
                 transactions: transactions,
+                removeTransaction: removeTransaction,
               ),
             ],
           )

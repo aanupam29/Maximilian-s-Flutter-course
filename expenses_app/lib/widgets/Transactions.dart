@@ -2,7 +2,7 @@ import 'package:expenses_app/models/Transaction.dart';
 import 'package:expenses_app/widgets/Chart.dart';
 import 'package:expenses_app/widgets/TransactionForm.dart';
 import 'package:expenses_app/widgets/TransactionList.dart';
-import 'package:expenses_app/widgets/TransactionListHeader.dart';
+import 'package:expenses_app/widgets/Header.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
@@ -17,7 +17,9 @@ class Transactions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Chart(),
-        TransactionListHeader(),
+        Header(
+          text: 'Your Transactions',
+        ),
         TransactionList(
           transactions: transactions,
         ),

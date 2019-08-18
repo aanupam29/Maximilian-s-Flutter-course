@@ -26,20 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Transaction> transactions = [
-    // Transaction(
-    //   id: 'osdij89',
-    //   description: 'New shoes',
-    //   amount: 49.89,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: '8273uc981n3',
-    //   description: 'Lunch',
-    //   amount: 12.99,
-    //   date: DateTime.now(),
-    // ),
-  ];
+  List<Transaction> transactions = [];
 
   void _removeTransaction(int index) {
     setState(() {
@@ -78,7 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Transactions(
         transactions: transactions,
-        addTransaction: _addTransaction,
         removeTransaction: _removeTransaction,
       ),
       floatingActionButton: FloatingActionButton(

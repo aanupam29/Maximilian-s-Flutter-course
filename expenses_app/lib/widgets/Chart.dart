@@ -1,4 +1,5 @@
 import 'package:expenses_app/models/Transaction.dart';
+import 'package:expenses_app/widgets/ChartBar.dart';
 import 'package:expenses_app/widgets/Header.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,13 @@ class Chart extends StatelessWidget {
         }
       });
 
-      return {'DAY': formater.format(date), 'amount': daySum};
+      return {'DAY': formater.format(date).substring(0, 1), 'amount': daySum};
+    });
+  }
+
+  double get maxAmount {
+    return groupedTransactionValues.fold(0, (sum, transaction) {
+      return sum + transaction['amount'];
     });
   }
 
@@ -47,7 +54,14 @@ class Chart extends StatelessWidget {
             ),
             padding: EdgeInsets.all(10),
             child: Row(
-              children: <Widget>[],
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: groupedTransactionValues.map((value) {
+                return ChartBar(
+                  amount: value['amount'],
+                  label: value['label'],
+                  percentageOfTotal: (value['amount'] as double) / maxAmount,
+                );
+              }).toList(),
             ),
             width: double.infinity,
           ),

@@ -57,6 +57,8 @@ class _TransactionFormState extends State<TransactionForm> {
     );
   }
 
+  
+
   void handleSubmit() {
     if (amountController.text.trim().length > 0 &&
         descriptionController.text.trim().length > 0) {

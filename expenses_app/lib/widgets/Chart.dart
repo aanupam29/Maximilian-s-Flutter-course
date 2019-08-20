@@ -37,37 +37,44 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
-    return Column(
-      children: <Widget>[
-        Header(
-          text: 'Transactions of last week',
-        ),
-        Card(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
-              border: Border.all(
-                color: Theme.of(context).primaryColorDark,
-              ),
-            ),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: groupedTransactionValues.map((value) {
-                return ChartBar(
-                  amount: value['amount'],
-                  label: value['label'],
-                  percentageOfTotal: (value['amount'] as double) / maxAmount,
-                );
-              }).toList(),
-            ),
-            width: double.infinity,
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          Header(
+            text: 'Transactions of last week',
           ),
-          elevation: 5,
-        ),
-      ],
+          Card(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+                border: Border.all(
+                  color: Theme.of(context).primaryColorDark,
+                ),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: groupedTransactionValues.map((value) {
+                  return Flexible(
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                      amount: value['amount'],
+                      label: value['label'],
+                      percentageOfTotal:
+                          (value['amount'] as double) / maxAmount,
+                    ),
+                  );
+                }).toList(),
+              ),
+              width: double.infinity,
+            ),
+            elevation: 5,
+          ),
+        ],
+      ),
     );
   }
 }

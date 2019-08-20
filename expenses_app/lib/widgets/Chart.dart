@@ -24,8 +24,8 @@ class Chart extends StatelessWidget {
         }
       });
 
-      return {'DAY': formater.format(date).substring(0, 1), 'amount': daySum};
-    });
+      return {'day': formater.format(date).substring(0, 1), 'amount': daySum};
+    }).reversed.toList();
   }
 
   double get maxAmount {
@@ -62,7 +62,7 @@ class Chart extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: ChartBar(
                       amount: value['amount'],
-                      label: value['label'],
+                      label: value['day'],
                       percentageOfTotal:
                           (value['amount'] as double) / maxAmount,
                     ),

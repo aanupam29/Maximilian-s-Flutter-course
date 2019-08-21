@@ -31,7 +31,7 @@ class TransactionList extends StatelessWidget {
                   removeTransaction(index);
                 },
                 icon: Icon(Icons.remove_circle_outline),
-                color: Colors.red,
+                color: Colors.redAccent[700],
               ),
             ),
           );

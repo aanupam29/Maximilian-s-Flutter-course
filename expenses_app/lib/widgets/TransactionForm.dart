@@ -48,7 +48,7 @@ class _TransactionFormState extends State<TransactionForm> {
             ),
             FlatButton(
               child: Text('Add Transaction'),
-              textColor: Colors.orange,
+              textColor: Colors.blue[900],
               onPressed: handleSubmit,
             )
           ],
@@ -56,8 +56,6 @@ class _TransactionFormState extends State<TransactionForm> {
       ),
     );
   }
-
-  
 
   void handleSubmit() {
     if (amountController.text.trim().length > 0 &&

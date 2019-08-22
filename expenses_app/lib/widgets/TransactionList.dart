@@ -13,25 +13,28 @@ class TransactionList extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (ctx, index) {
-          return Card(
-            child: ListTile(
-              leading: PriceTag(transactions[index].getAmount()),
-              title: Text(
-                transactions[index].description,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+          return Padding(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              child: ListTile(
+                leading: PriceTag(transactions[index].getAmount()),
+                title: Text(
+                  transactions[index].description,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                transactions[index].getDate(),
-                style: TextStyle(color: Colors.grey),
-              ),
-              trailing: IconButton(
-                onPressed: () {
-                  removeTransaction(index);
-                },
-                icon: Icon(Icons.remove_circle_outline),
-                color: Colors.redAccent[700],
+                subtitle: Text(
+                  transactions[index].getDate(),
+                  style: TextStyle(color: Colors.grey),
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    removeTransaction(index);
+                  },
+                  icon: Icon(Icons.remove_circle_outline),
+                  color: Colors.redAccent[700],
+                ),
               ),
             ),
           );

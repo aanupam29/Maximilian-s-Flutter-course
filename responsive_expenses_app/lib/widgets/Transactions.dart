@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 class Transactions extends StatelessWidget {
   final List<Transaction> transactions;
   final Function removeTransaction;
+  final bool showTransactions;
 
   Transactions({
     this.transactions,
     this.removeTransaction,
+    this.showTransactions,
   });
 
   List<Transaction> get recentTransactions {
@@ -24,24 +26,57 @@ class Transactions extends StatelessWidget {
     }).toList();
   }
 
+  Widget _renderContent(Orientation currentOrientation) {
+    if (currentOrientation == Orientation.landscape) {
+      if (showTransactions) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Header(
+              text: 'Your Transactions',
+            ),
+            TransactionList(
+              transactions: transactions,
+              removeTransaction: removeTransaction,
+            ),
+          ],
+        );
+      } else {
+        return Column(
+          children: <Widget>[
+            Chart(
+              transactions: recentTransactions,
+            )
+          ],
+        );
+      }
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Chart(
+            transactions: recentTransactions,
+          ),
+          Header(
+            text: 'Your Transactions',
+          ),
+          TransactionList(
+            transactions: transactions,
+            removeTransaction: removeTransaction,
+          ),
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return transactions.length > 0
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Chart(
-                transactions: recentTransactions,
-              ),
-              Header(
-                text: 'Your Transactions',
-              ),
-              TransactionList(
-                transactions: transactions,
-                removeTransaction: removeTransaction,
-              ),
-            ],
-          )
-        : NoTransactions();
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return transactions.length > 0
+            ? _renderContent(orientation)
+            : NoTransactions();
+      },
+    );
   }
 }

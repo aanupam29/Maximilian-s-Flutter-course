@@ -36,7 +36,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
     return Padding(
       padding: EdgeInsets.all(10),
       child: Column(

@@ -64,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         showTransactions = true;
       }
-      print(showTransactions);
     });
   }
 

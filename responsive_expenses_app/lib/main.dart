@@ -73,9 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (builderContext, Orientation orientation) {
       return orientation == Orientation.landscape
           ? FloatingActionButton(
-              child: Icon(
-                Icons.attach_money,
-              ),
+              child: showTransactions
+                  ? Icon(
+                      Icons.insert_chart,
+                    )
+                  : Icon(Icons.list),
               onPressed: () => _changePerspective(),
             )
           : FloatingActionButton(

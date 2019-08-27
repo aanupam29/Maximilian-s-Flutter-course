@@ -45,9 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _showAddTransactionModal(BuildContext context) {
+  void _showAddTransactionModal(BuildContext context, Orientation orientation) {
     showModalBottomSheet(
-      isScrollControlled: true,
+      isScrollControlled: orientation == Orientation.landscape ? true : false,
       context: context,
       builder: (BuildContext builderContext) {
         return TransactionForm(
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(
                 Icons.add,
               ),
-              onPressed: () => _showAddTransactionModal(context),
+              onPressed: () => _showAddTransactionModal(context, orientation),
             );
     });
   }
@@ -94,10 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text('Responsive Personal Expenses'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _showAddTransactionModal(context),
-            )
+            OrientationBuilder(
+                builder: (BuildContext _, Orientation orientation) {
+              return IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _showAddTransactionModal(context, orientation),
+              );
+            })
           ],
         ),
         body: Transactions(

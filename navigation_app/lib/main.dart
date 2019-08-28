@@ -69,45 +69,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _renderFab(BuildContext contet) {
     return OrientationBuilder(
-        builder: (builderContext, Orientation orientation) {
-      return orientation == Orientation.landscape
-          ? FloatingActionButton(
-              child: showTransactions
-                  ? Icon(
-                      Icons.insert_chart,
-                    )
-                  : Icon(Icons.list),
-              onPressed: () => _changePerspective(),
-            )
-          : FloatingActionButton(
-              child: Icon(
-                Icons.add,
-              ),
-              onPressed: () => _showAddTransactionModal(context, orientation),
-            );
-    });
+      builder: (builderContext, Orientation orientation) {
+        return orientation == Orientation.landscape
+            ? FloatingActionButton(
+                child: showTransactions
+                    ? Icon(
+                        Icons.insert_chart,
+                      )
+                    : Icon(Icons.list),
+                onPressed: () => _changePerspective(),
+              )
+            : FloatingActionButton(
+                child: Icon(
+                  Icons.add,
+                ),
+                onPressed: () => _showAddTransactionModal(context, orientation),
+              );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Navigation Personal Expenses'),
-          actions: <Widget>[
-            OrientationBuilder(
-                builder: (BuildContext _, Orientation orientation) {
+      appBar: AppBar(
+        title: Text('Navigation Personal Expenses'),
+        actions: <Widget>[
+          OrientationBuilder(
+            builder: (BuildContext _, Orientation orientation) {
               return IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () => _showAddTransactionModal(context, orientation),
               );
-            })
-          ],
-        ),
-        body: Transactions(
-          transactions: transactions,
-          removeTransaction: _removeTransaction,
-          showTransactions: showTransactions,
-        ),
-        floatingActionButton: _renderFab(context));
+            },
+          )
+        ],
+      ),
+      body: Transactions(
+        transactions: transactions,
+        removeTransaction: _removeTransaction,
+        showTransactions: showTransactions,
+      ),
+      floatingActionButton: _renderFab(context),
+    );
   }
 }

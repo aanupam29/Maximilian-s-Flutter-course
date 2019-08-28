@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Responsive Personal Expenses',
+      title: 'Navigation Personal Expenses',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Quicksand',
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Responsive Personal Expenses'),
+          title: Text('Navigation Personal Expenses'),
           actions: <Widget>[
             OrientationBuilder(
                 builder: (BuildContext _, Orientation orientation) {

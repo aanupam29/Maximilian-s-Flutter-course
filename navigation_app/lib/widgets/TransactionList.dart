@@ -1,4 +1,5 @@
 import 'package:expenses_app/models/Transaction.dart';
+import 'package:expenses_app/pages/TransactionPage.dart';
 import 'package:expenses_app/widgets/PriceTag.dart';
 import 'package:flutter/material.dart';
 
@@ -28,12 +29,30 @@ class TransactionList extends StatelessWidget {
                   transactions[index].getDate(),
                   style: TextStyle(color: Colors.grey),
                 ),
-                trailing: IconButton(
-                  onPressed: () {
-                    removeTransaction(index);
-                  },
-                  icon: Icon(Icons.remove_circle_outline),
-                  color: Colors.redAccent[700],
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {
+                        removeTransaction(index);
+                      },
+                      icon: Icon(Icons.remove_circle_outline),
+                      color: Colors.redAccent[700],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext _) {
+                            return TransactionPage(
+                                selectedTransaction: transactions[index]);
+                          }),
+                        );
+                      },
+                      icon: Icon(Icons.info_outline),
+                      color: Colors.purpleAccent,
+                    ),
+                  ],
                 ),
               ),
             ),

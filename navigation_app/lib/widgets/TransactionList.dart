@@ -40,14 +40,21 @@ class TransactionList extends StatelessWidget {
                       color: Colors.redAccent[700],
                     ),
                     IconButton(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        bool shouldDelete = await Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (BuildContext _) {
-                            return TransactionPage(
-                                selectedTransaction: transactions[index]);
-                          }),
+                          MaterialPageRoute(
+                            builder: (BuildContext _) {
+                              return TransactionPage(
+                                  selectedTransaction: transactions[index]);
+                            },
+                          ),
                         );
+                        print(shouldDelete);
+
+                        if (shouldDelete == true) {
+                          removeTransaction(index);
+                        }
                       },
                       icon: Icon(Icons.info_outline),
                       color: Colors.purpleAccent,

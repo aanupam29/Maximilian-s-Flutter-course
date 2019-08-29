@@ -9,13 +9,13 @@ class TransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Text(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
                 "\$ ${selectedTransaction.getAmount()}",
                 style: TextStyle(
                   fontSize: 40,
@@ -23,25 +23,45 @@ class TransactionPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            Center(
-              child: Text(
+              Text(
                 selectedTransaction.description,
                 style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            Center(
-              child: Text(
+              Text(
                 selectedTransaction.getDate(),
                 style: TextStyle(
                   fontSize: 15,
                 ),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    MaterialButton(
+                      child: Text('< Go back'),
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                    ),
+                    MaterialButton(
+                      child: Text('Remove!'),
+                      textColor: Colors.white,
+                      color: Colors.red,
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       appBar: AppBar(

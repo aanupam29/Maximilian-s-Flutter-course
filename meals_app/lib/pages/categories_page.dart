@@ -18,8 +18,7 @@ class CategoriesScreen extends StatelessWidget {
           children: categories
               .map(
                 (category) => CategoryCard(
-                  title: category.title,
-                  color: category.color,
+                  category: category,
                 ),
               )
               .toList(),

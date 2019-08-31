@@ -1,3 +1,4 @@
+import 'package:expenses_app/pages/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses_app/models/Transaction.dart';
 import 'package:expenses_app/widgets/TransactionForm.dart';
@@ -119,6 +120,28 @@ class _HomePageState extends State<HomePage> {
         transactions: transactions,
         removeTransaction: _removeTransaction,
         showTransactions: showTransactions,
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            AppBar(
+              automaticallyImplyLeading: false,
+              title: Text('Choose a page!'),
+            ),
+            ListTile(
+              leading: Icon(Icons.verified_user),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext _) => ProfilePage(),
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       ),
       floatingActionButton: _renderFab(context),
     );

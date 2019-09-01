@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/pages/categories_page.dart';
+import 'package:meals_app/pages/main_tabs.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: CategoriesScreen(),
+      home: MainTabs(),
     );
   }
 }

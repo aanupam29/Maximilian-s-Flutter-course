@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/pages/categories_page.dart';
+import 'package:meals_app/pages/favorites_page.dart';
 
 class MainTabs extends StatefulWidget {
   @override
@@ -44,7 +45,7 @@ class _MainTabsState extends State<MainTabs>
               controller: _tabController,
               children: <Widget>[
                 CategoriesPage(),
-                CategoriesPage(),
+                FavoritesPage(),
               ],
             ),
           ),

@@ -9,8 +9,8 @@ class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
       child: GridView(
+        padding: EdgeInsets.all(10),
         children: categories
             .map(
               (category) => CategoryCard(

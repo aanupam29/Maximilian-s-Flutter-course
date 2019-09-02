@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/category.dart';
-import 'package:meals_app/pages/meals_page.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
@@ -20,8 +19,11 @@ class CategoryCard extends StatelessWidget {
   void _handleTap(BuildContext context) {
     if (isHero == false) {
       print(isHero);
-      Navigator.pushNamed(context, '/meals',
-          arguments: {'selectedCategory': category});
+      Navigator.pushNamed(
+        context,
+        '/meals',
+        arguments: {'selectedCategory': category},
+      );
     }
   }
 

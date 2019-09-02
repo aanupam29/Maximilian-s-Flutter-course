@@ -50,7 +50,7 @@ class _MainTabsState extends State<MainTabs>
             ),
           ),
           Container(
-            color: Colors.teal[900],
+            color: Colors.indigoAccent,
             child: TabBar(
               controller: _tabController,
               tabs: <Widget>[

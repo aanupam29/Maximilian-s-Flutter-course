@@ -2,7 +2,6 @@ import 'package:expenses_app/models/Transaction.dart';
 import 'package:expenses_app/widgets/TransactionForm.dart';
 import 'package:expenses_app/widgets/Transactions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

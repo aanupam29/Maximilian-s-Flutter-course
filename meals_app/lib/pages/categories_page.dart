@@ -13,8 +13,11 @@ class CategoriesPage extends StatelessWidget {
         padding: EdgeInsets.all(10),
         children: categories
             .map(
-              (category) => CategoryCard(
-                category: category,
+              (category) => Hero(
+                tag: "categoryHero${category.id}",
+                child: CategoryCard(
+                  category: category,
+                ),
               ),
             )
             .toList(),

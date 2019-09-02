@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/category.dart';
+import 'package:meals_app/pages/meals_page.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
+  final bool isHero;
 
-  CategoryCard({this.category});
+  CategoryCard({this.category, this.isHero = false});
 
   List<Color> _getColors() {
     if (category.colors.length == 1) {
@@ -27,32 +29,66 @@ class CategoryCard extends StatelessWidget {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: category.colors[0],
-      borderRadius: BorderRadius.circular(10),
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Center(
-          child: Text(
-            category.title,
-            style: TextStyle(
-              color: _getTextColor(),
-              fontWeight: FontWeight.bold,
-            ),
+  void _handleTap(BuildContext context) {
+    if (isHero == false) {
+      print(isHero);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext _) => MealsPage(
+            selectedCategory: category,
           ),
         ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: _getColors(),
-            begin: category.beginAlignment,
-            end: category.endAlignment,
-            // begin: Alignment.topLeft,
-            // end: Alignment.bottomRight,
+      );
+    }
+  }
+
+  BorderRadius _getBorder() {
+    if (isHero == false) {
+      return BorderRadius.circular(10);
+    } else {
+      return BorderRadius.circular(0);
+    }
+  }
+
+  EdgeInsets _getPadding() {
+    if (isHero == false) {
+      return EdgeInsets.all(5);
+    } else {
+      return EdgeInsets.only(top: 40, bottom: 40, left: 5, right: 5);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: InkWell(
+        splashColor: category.colors[0],
+        borderRadius: _getBorder(),
+        onTap: () {
+          _handleTap(context);
+        },
+        child: Container(
+          padding: _getPadding(),
+          child: Center(
+            child: Text(
+              category.title,
+              style: TextStyle(
+                color: _getTextColor(),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          borderRadius: BorderRadius.circular(10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: _getColors(),
+              begin: category.beginAlignment,
+              end: category.endAlignment,
+              // begin: Alignment.topLeft,
+              // end: Alignment.bottomRight,
+            ),
+            borderRadius: _getBorder(),
+          ),
         ),
       ),
     );

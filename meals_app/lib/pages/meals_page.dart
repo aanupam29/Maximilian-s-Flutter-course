@@ -3,6 +3,7 @@ import 'package:meals_app/data/dummy-data.dart';
 import 'package:meals_app/models/category.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/category_card.dart';
+import 'package:meals_app/widgets/meal_card.dart';
 
 class MealsPage extends StatelessWidget {
   final List<Meal> allMeals = DUMMY_MEALS;
@@ -35,8 +36,9 @@ class MealsPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemBuilder: (BuildContext _, index) =>
-                  Text(categoryMeals[index].title),
+              itemBuilder: (BuildContext _, index) => MealCard(
+                meal: categoryMeals[index],
+              ),
               itemCount: categoryMeals.length,
             ),
           )

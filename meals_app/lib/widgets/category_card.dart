@@ -9,37 +9,19 @@ class CategoryCard extends StatelessWidget {
   CategoryCard({this.category, this.isHero = false});
 
   List<Color> _getColors() {
-    if (category.colors.length == 1) {
-      final Color color = category.colors[0];
-      return [
-        color.withOpacity(0.2),
-        color.withOpacity(0.6),
-        color,
-      ];
-    } else {
-      return category.colors;
-    }
-  }
-
-  Color _getTextColor() {
-    if (category.colors.length == 1) {
-      return Colors.white;
-    } else {
-      return Colors.black;
-    }
+    final Color color = category.colors[0];
+    return [
+      color.withOpacity(0.2),
+      color.withOpacity(0.6),
+      color,
+    ];
   }
 
   void _handleTap(BuildContext context) {
     if (isHero == false) {
       print(isHero);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext _) => MealsPage(
-            selectedCategory: category,
-          ),
-        ),
-      );
+      Navigator.pushNamed(context, '/meals',
+          arguments: {'selectedCategory': category});
     }
   }
 
@@ -74,7 +56,7 @@ class CategoryCard extends StatelessWidget {
             child: Text(
               category.title,
               style: TextStyle(
-                color: _getTextColor(),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),

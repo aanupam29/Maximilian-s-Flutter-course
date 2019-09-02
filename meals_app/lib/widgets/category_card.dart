@@ -29,26 +29,31 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      child: Center(
-        child: Text(
-          category.title,
-          style: TextStyle(
-            color: _getTextColor(),
-            fontWeight: FontWeight.bold,
+    return InkWell(
+      splashColor: category.colors[0],
+      borderRadius: BorderRadius.circular(10),
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        child: Center(
+          child: Text(
+            category.title,
+            style: TextStyle(
+              color: _getTextColor(),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: _getColors(),
-          begin: category.beginAlignment,
-          end: category.endAlignment,
-          // begin: Alignment.topLeft,
-          // end: Alignment.bottomRight,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: _getColors(),
+            begin: category.beginAlignment,
+            end: category.endAlignment,
+            // begin: Alignment.topLeft,
+            // end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
-        borderRadius: BorderRadius.circular(10),
       ),
     );
   }

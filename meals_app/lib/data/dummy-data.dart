@@ -7,12 +7,7 @@ const List<Category> DUMMY_CATEGORIES = const [
     title: 'Italian',
     colors: const [
       Colors.green,
-      Colors.white,
-      Colors.white,
-      Colors.red,
     ],
-    beginAlignment: Alignment.centerLeft,
-    endAlignment: Alignment.centerRight,
   ),
   Category(
     id: 'c2',
@@ -28,22 +23,18 @@ const List<Category> DUMMY_CATEGORIES = const [
     id: 'c4',
     title: 'German',
     colors: const [
-      Colors.black,
-      Colors.red,
-      Colors.yellowAccent,
+      Colors.purple,
     ],
-    beginAlignment: Alignment.topCenter,
-    endAlignment: Alignment.bottomCenter,
   ),
   Category(
     id: 'c5',
     title: 'Light & Lovely',
-    colors: const [Colors.blue],
+    colors: const [Colors.blueAccent],
   ),
   Category(
     id: 'c6',
     title: 'Exotic',
-    colors: const [Colors.green],
+    colors: const [Colors.greenAccent],
   ),
   Category(
     id: 'c7',
@@ -60,12 +51,7 @@ const List<Category> DUMMY_CATEGORIES = const [
     title: 'French',
     colors: const [
       Colors.blue,
-      Colors.white,
-      Colors.white,
-      Colors.red,
     ],
-    beginAlignment: Alignment.centerLeft,
-    endAlignment: Alignment.centerRight,
   ),
   Category(
     id: 'c10',

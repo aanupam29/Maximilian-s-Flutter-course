@@ -6,12 +6,14 @@ class MealCard extends StatelessWidget {
 
   MealCard({@required this.meal});
 
-  void _handleTap() {}
+  void _handleTap(BuildContext context) {
+    Navigator.pushNamed(context, '/meal', arguments: {'meal': meal});
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _handleTap,
+      onTap: () => _handleTap(context),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -27,11 +29,14 @@ class MealCard extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
-                  child: Image.network(
-                    meal.imageUrl,
-                    height: 250,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: "mealHero${meal.id}",
+                    child: Image.network(
+                      meal.imageUrl,
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Container(

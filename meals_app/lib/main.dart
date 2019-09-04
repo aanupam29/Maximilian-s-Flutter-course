@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/pages/main_tabs.dart';
+import 'package:meals_app/pages/meal_page.dart';
 import 'package:meals_app/pages/meals_page.dart';
 
 void main() => runApp(MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => MainTabs(),
         '/meals': (context) => MealsPage(),
+        '/meal': (context) => MealPage(),
       },
     );
   }

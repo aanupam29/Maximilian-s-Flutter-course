@@ -33,4 +33,48 @@ class Meal {
     @required this.isVegan,
     @required this.isVegetarian,
   });
+
+  String get getComplexity {
+    String mealComplexity;
+
+    switch (complexity) {
+      case Complexity.Simple:
+        mealComplexity = 'Simple';
+        break;
+
+      case Complexity.Challenging:
+        mealComplexity = 'Challenging';
+        break;
+
+      case Complexity.Hard:
+        mealComplexity = 'Hard';
+        break;
+    }
+
+    return mealComplexity;
+  }
+
+  String get getAffordability {
+    String mealAffordability;
+
+    switch (affordability) {
+      case Affordability.Affordable:
+        mealAffordability = 'Affordable';
+        break;
+
+      case Affordability.Pricey:
+        mealAffordability = 'Pricey';
+        break;
+
+      case Affordability.Luxurious:
+        mealAffordability = 'Luxurious';
+        break;
+    }
+
+    return mealAffordability;
+  }
+
+  String get getDuration {
+    return "$duration min";
+  }
 }

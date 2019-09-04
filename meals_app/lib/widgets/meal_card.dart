@@ -49,11 +49,63 @@ class MealCard extends StatelessWidget {
                   child: Text(
                     meal.title,
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.videogame_asset),
+                      ),
+                      Text(
+                        meal.getComplexity,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.attach_money),
+                      ),
+                      Text(
+                        meal.getAffordability,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.timer),
+                      ),
+                      Text(
+                        meal.getDuration,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

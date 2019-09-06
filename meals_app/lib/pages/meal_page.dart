@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/widgets/ingredients_box.dart';
 
 class MealPage extends StatelessWidget {
   @override
@@ -12,18 +13,35 @@ class MealPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("${meal.title}"),
       ),
-      body: Column(
-        children: <Widget>[
-          Hero(
-            tag: "mealHero${meal.id}",
-            child: Image.network(
-              meal.imageUrl,
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Hero(
+              tag: "mealHero${meal.id}",
+              child: Image.network(
+                meal.imageUrl,
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.only(top: 30, bottom: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Ingredients',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  IngredientsBox(
+                    ingredients: meal.ingredients,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
     ;

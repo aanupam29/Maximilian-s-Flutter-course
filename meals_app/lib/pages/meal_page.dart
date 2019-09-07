@@ -44,6 +44,5 @@ class MealPage extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/widgets/how_to.dart';
 import 'package:meals_app/widgets/ingredients_box.dart';
 
 class MealPage extends StatelessWidget {
@@ -36,6 +37,21 @@ class MealPage extends StatelessWidget {
                   ),
                   IngredientsBox(
                     ingredients: meal.ingredients,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 30, bottom: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'How to do',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  HowTo(
+                    steps: meal.steps,
                   )
                 ],
               ),

@@ -15,6 +15,7 @@ class MealPage extends StatelessWidget {
         title: Text("${meal.title}"),
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 20, top: 10),
         child: Column(
           children: <Widget>[
             Hero(

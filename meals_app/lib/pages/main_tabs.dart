@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/pages/categories_page.dart';
 import 'package:meals_app/pages/favorites_page.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 class MainTabs extends StatefulWidget {
   @override
@@ -64,6 +65,9 @@ class _MainTabsState extends State<MainTabs>
             ),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: MainDrawer(),
       ),
     );
   }

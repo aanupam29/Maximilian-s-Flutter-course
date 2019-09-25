@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/pages/main_tabs.dart';
+import 'package:meals_app/pages/home_page.dart';
 import 'package:meals_app/pages/meal_page.dart';
 import 'package:meals_app/pages/meals_page.dart';
 
@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
       title: 'Meals app',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        accentColor: Colors.yellow,
+        accentColor: Colors.yellow[600],
         fontFamily: 'Raleway',
         canvasColor: Colors.indigo[50],
       ),
-      home: MainTabs(),
+      home: HomePage(),
       routes: {
-        '/home': (context) => MainTabs(),
+        '/home': (context) => HomePage(),
         '/meals': (context) => MealsPage(),
         '/meal': (context) => MealPage(),
       },

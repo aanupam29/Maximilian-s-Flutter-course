@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
+  final Function changeDrawerPage;
+
+  MainDrawer({this.changeDrawerPage});
+
   Widget _renderListTiles(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -14,7 +18,10 @@ class MainDrawer extends StatelessWidget {
             'Meals',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
-          onTap: () {},
+          onTap: () {
+            changeDrawerPage('tabs');
+            Navigator.of(context).pop();
+          },
         ),
         ListTile(
           leading: Icon(
@@ -26,7 +33,10 @@ class MainDrawer extends StatelessWidget {
             'Settings',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
-          onTap: () {},
+          onTap: () {
+            changeDrawerPage('settings');
+            Navigator.of(context).pop();
+          },
         )
       ],
     );

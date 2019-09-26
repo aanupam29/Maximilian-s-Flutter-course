@@ -14,11 +14,14 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   Widget currentScreen;
   String title;
+  bool gluttenFree, lactoseFree, vegetarian, vegan;
 
   @override
   void initState() {
     super.initState();
     title = 'Categories';
+    gluttenFree = lactoseFree = vegetarian = vegan = true;
+
     currentScreen = MainTabs(
       changeTitle: this.changePageTitle,
     );
@@ -30,6 +33,32 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  void onChangeSwitch(String variable, bool value) {
+    switch (variable) {
+      case 'glutten':
+        setState(() {
+          gluttenFree = value;
+        });
+        break;
+      case 'lactose':
+        setState(() {
+          lactoseFree = value;
+        });
+        break;
+      case 'vegetarian':
+        setState(() {
+          vegetarian = value;
+        });
+        break;
+      case 'vegan':
+        setState(() {
+          vegan = value;
+        });
+        break;
+      default:
+    }
+  }
+
   void changeDrawerPage(String route) {
     switch (route) {
       case 'tabs':
@@ -39,7 +68,13 @@ class _HomePageState extends State<HomePage>
         changePageTitle('Categories');
         break;
       case 'settings':
-        currentScreen = SettingsPage();
+        currentScreen = SettingsPage(
+          gluttenFree: this.gluttenFree,
+          lactoseFree: this.lactoseFree,
+          vegan: this.vegan,
+          vegetarian: this.vegetarian,
+          onSwitchChange: this.onChangeSwitch,
+        );
         changePageTitle('Settings');
         break;
       default:

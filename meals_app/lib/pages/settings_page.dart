@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   final bool gluttenFree, lactoseFree, vegetarian, vegan;
   final Function onSwitchChange;
 
@@ -11,6 +11,47 @@ class SettingsPage extends StatelessWidget {
     this.vegan,
     this.onSwitchChange,
   });
+
+  @override
+  _SettingsPageState createState() =>
+      _SettingsPageState(localGluttenFree: gluttenFree);
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool localGluttenFree, localLactoseFree, localVegetarian, localVegan;
+
+  _SettingsPageState({
+    this.localGluttenFree,
+    this.localLactoseFree,
+    this.localVegetarian,
+    this.localVegan,
+  });
+
+  void onChangeSwitch(String variable, bool value) {
+    switch (variable) {
+      case 'glutten':
+        setState(() {
+          localGluttenFree = value;
+        });
+        break;
+      case 'lactose':
+        setState(() {
+          localLactoseFree = value;
+        });
+        break;
+      case 'vegetarian':
+        setState(() {
+          localVegetarian = value;
+        });
+        break;
+      case 'vegan':
+        setState(() {
+          localVegan = value;
+        });
+        break;
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +70,11 @@ class SettingsPage extends StatelessWidget {
           ),
           SwitchListTile(
             title: const Text('Lights'),
-            value: gluttenFree,
+            value: localGluttenFree,
             onChanged: (bool value) {
-              onSwitchChange('glutten', value);
+              onChangeSwitch('glutten', value);
+              widget.onSwitchChange('glutten', value);
             },
-            secondary: const Icon(Icons.lightbulb_outline),
           ),
         ],
       ),

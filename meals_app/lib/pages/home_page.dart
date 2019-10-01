@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage>
     super.initState();
     currentScreen = MainTabs(
       changeTitle: this.changePageTitle,
+      settings: settings,
     );
   }
 
@@ -64,6 +65,7 @@ class _HomePageState extends State<HomePage>
       case 'tabs':
         currentScreen = MainTabs(
           changeTitle: this.changePageTitle,
+          settings: this.settings,
         );
         changePageTitle('Categories');
         break;
@@ -75,7 +77,10 @@ class _HomePageState extends State<HomePage>
         changePageTitle('Settings');
         break;
       default:
-        currentScreen = SettingsPage();
+        currentScreen = SettingsPage(
+          settings: this.settings,
+          onSwitchChange: this.onChangeSwitch,
+        );
         changePageTitle('Categories');
         break;
     }

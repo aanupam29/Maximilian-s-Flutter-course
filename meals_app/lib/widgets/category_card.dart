@@ -4,13 +4,18 @@ import 'package:meals_app/models/category.dart';
 class CategoryCard extends StatelessWidget {
   final Category category;
   final bool isHero;
+  final Map<String, bool> settings;
 
-  CategoryCard({this.category, this.isHero = false});
+  CategoryCard({
+    this.category,
+    this.isHero = false,
+    this.settings,
+  });
 
   List<Color> _getColors() {
     final Color color = category.colors[0];
     return [
-      color.withOpacity(0.2),
+      color.withOpacity(0.1),
       color.withOpacity(0.6),
       color,
     ];
@@ -18,11 +23,10 @@ class CategoryCard extends StatelessWidget {
 
   void _handleTap(BuildContext context) {
     if (isHero == false) {
-      print(isHero);
       Navigator.pushNamed(
         context,
         '/meals',
-        arguments: {'selectedCategory': category},
+        arguments: {'selectedCategory': category, 'settings': settings},
       );
     }
   }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/pages/categories_page.dart';
-import 'package:meals_app/pages/favorites_page.dart';
 import 'package:meals_app/pages/main_tabs.dart';
 import 'package:meals_app/pages/settings_page.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
@@ -13,15 +11,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   Widget currentScreen;
-  String title;
-  bool gluttenFree, lactoseFree, vegetarian, vegan;
+  String title = 'Categories';
+  Map<String, bool> settings = {
+    "glutenFree": false,
+    "lactoseFree": false,
+    "vegetarian": false,
+    "vegan": false
+  };
 
   @override
   void initState() {
     super.initState();
-    title = 'Categories';
-    gluttenFree = lactoseFree = vegetarian = vegan = true;
-
     currentScreen = MainTabs(
       changeTitle: this.changePageTitle,
     );
@@ -35,24 +35,24 @@ class _HomePageState extends State<HomePage>
 
   void onChangeSwitch(String variable, bool value) {
     switch (variable) {
-      case 'glutten':
+      case 'gluten':
         setState(() {
-          gluttenFree = value;
+          settings['glutenFree'] = value;
         });
         break;
       case 'lactose':
         setState(() {
-          lactoseFree = value;
+          settings['lactoseFree'] = value;
         });
         break;
       case 'vegetarian':
         setState(() {
-          vegetarian = value;
+          settings['vegetarian'] = value;
         });
         break;
       case 'vegan':
         setState(() {
-          vegan = value;
+          settings['vegan'] = value;
         });
         break;
       default:
@@ -69,10 +69,7 @@ class _HomePageState extends State<HomePage>
         break;
       case 'settings':
         currentScreen = SettingsPage(
-          gluttenFree: this.gluttenFree,
-          lactoseFree: this.lactoseFree,
-          vegan: this.vegan,
-          vegetarian: this.vegetarian,
+          settings: this.settings,
           onSwitchChange: this.onChangeSwitch,
         );
         changePageTitle('Settings');

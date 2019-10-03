@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/category.dart';
+import 'package:meals_app/models/meal.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
   final bool isHero;
   final Map<String, bool> settings;
-  final List<String> favoriteMeals;
+  final List<Meal> favoriteMeals;
 
   CategoryCard(
       {this.category, this.isHero = false, this.settings, this.favoriteMeals});

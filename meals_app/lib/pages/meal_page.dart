@@ -52,7 +52,7 @@ class _MealPageState extends State<MealPage> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      favorite(meal.id);
+                      favorite(meal);
                       isFavorite = !isFavorite;
                     });
                   },

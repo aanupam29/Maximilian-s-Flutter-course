@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/pages/categories_page.dart';
 import 'package:meals_app/pages/favorites_page.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
@@ -6,7 +7,7 @@ import 'package:meals_app/widgets/main_drawer.dart';
 class MainTabs extends StatefulWidget {
   final Function changeTitle;
   final Map<String, bool> settings;
-  final List<String> favoriteMeals;
+  final List<Meal> favoriteMeals;
 
   MainTabs({this.changeTitle, this.settings, this.favoriteMeals});
 

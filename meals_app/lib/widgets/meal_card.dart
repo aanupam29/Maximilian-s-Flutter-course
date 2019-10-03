@@ -28,7 +28,7 @@ class _MealCardState extends State<MealCard> {
   Widget _renderFavoriteIcon() {
     return InkWell(
       onTap: () {
-        widget.favorite(widget.meal.id);
+        widget.favorite(widget.meal);
       },
       child: Container(
         margin: EdgeInsets.only(left: 80),

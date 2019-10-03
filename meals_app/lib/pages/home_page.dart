@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/pages/main_tabs.dart';
 import 'package:meals_app/pages/settings_page.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
@@ -12,7 +13,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   Widget currentScreen;
   String title = 'Categories';
-  List<String> favoriteMeals = [];
+  List<Meal> favoriteMeals = [];
   Map<String, bool> settings = {
     "glutenFree": false,
     "lactoseFree": false,

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/data/dummy-data.dart';
 import 'package:meals_app/models/category.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/category_card.dart';
 
 class CategoriesPage extends StatelessWidget {
   final List<Category> categories = DUMMY_CATEGORIES;
   final Map<String, bool> settings;
-  final List<String> favoriteMeals;
+  final List<Meal> favoriteMeals;
 
   CategoriesPage({this.settings, this.favoriteMeals});
 

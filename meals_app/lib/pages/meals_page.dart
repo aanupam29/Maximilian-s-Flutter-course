@@ -12,14 +12,14 @@ class MealsPage extends StatefulWidget {
 
 class _MealsPageState extends State<MealsPage> {
   final List<Meal> allMeals = DUMMY_MEALS;
-  List<String> favoriteMeals;
+  List<Meal> favoriteMeals;
 
-  void addFavoriteMeal(String id) {
+  void addFavoriteMeal(Meal meal) {
     setState(() {
-      if (favoriteMeals.contains(id)) {
-        favoriteMeals.removeAt(favoriteMeals.indexOf(id));
+      if (favoriteMeals.contains(meal)) {
+        favoriteMeals.removeAt(favoriteMeals.indexOf(meal));
       } else {
-        favoriteMeals.add(id);
+        favoriteMeals.add(meal);
       }
     });
     print(favoriteMeals);
@@ -68,8 +68,7 @@ class _MealsPageState extends State<MealsPage> {
                 ? ListView.builder(
                     itemBuilder: (BuildContext _, index) => MealCard(
                       meal: categoryMeals[index],
-                      isFavorite:
-                          favoriteMeals.contains(categoryMeals[index].id),
+                      isFavorite: favoriteMeals.contains(categoryMeals[index]),
                       favorite: addFavoriteMeal,
                     ),
                     itemCount: categoryMeals.length,

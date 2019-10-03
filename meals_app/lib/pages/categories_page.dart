@@ -6,8 +6,9 @@ import 'package:meals_app/widgets/category_card.dart';
 class CategoriesPage extends StatelessWidget {
   final List<Category> categories = DUMMY_CATEGORIES;
   final Map<String, bool> settings;
+  final List<String> favoriteMeals;
 
-  CategoriesPage({this.settings});
+  CategoriesPage({this.settings, this.favoriteMeals});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class CategoriesPage extends StatelessWidget {
                 child: CategoryCard(
                   category: category,
                   settings: settings,
+                  favoriteMeals: favoriteMeals,
                 ),
               ),
             )

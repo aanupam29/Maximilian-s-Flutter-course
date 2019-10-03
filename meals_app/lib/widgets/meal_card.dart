@@ -1,13 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 
-class MealCard extends StatelessWidget {
+class MealCard extends StatefulWidget {
   final Meal meal;
+  final bool isFavorite;
+  final Function favorite;
 
-  MealCard({@required this.meal});
+  MealCard({
+    @required this.meal,
+    this.isFavorite,
+    this.favorite,
+  });
 
+  @override
+  _MealCardState createState() => _MealCardState();
+}
+
+class _MealCardState extends State<MealCard> {
   void _handleTap(BuildContext context) {
-    Navigator.pushNamed(context, '/meal', arguments: {'meal': meal});
+    Navigator.pushNamed(context, '/meal', arguments: {
+      'meal': widget.meal,
+      'isFavorite': widget.isFavorite,
+      'favorite': widget.favorite
+    });
+  }
+
+  Widget _renderFavoriteIcon() {
+    return InkWell(
+      onTap: () {
+        widget.favorite(widget.meal.id);
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 80),
+        padding: EdgeInsets.all(10),
+        width: double.infinity,
+        alignment: Alignment.bottomRight,
+        child: Icon(
+          widget.isFavorite ? Icons.star : Icons.star_border,
+          size: 40,
+          color: widget.isFavorite ? Colors.yellow : Colors.grey,
+        ),
+      ),
+    );
   }
 
   @override
@@ -32,10 +66,10 @@ class MealCard extends StatelessWidget {
                         topRight: Radius.circular(10),
                       ),
                       child: Hero(
-                          tag: "mealHero${meal.id}",
+                          tag: "mealHero${widget.meal.id}",
                           child: Material(
                             child: Ink.image(
-                              image: NetworkImage(meal.imageUrl),
+                              image: NetworkImage(widget.meal.imageUrl),
                               child: Container(
                                 height: 250,
                                 width: double.infinity,
@@ -51,6 +85,7 @@ class MealCard extends StatelessWidget {
                           // ),
                           ),
                     ),
+                    _renderFavoriteIcon(),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -64,7 +99,7 @@ class MealCard extends StatelessWidget {
                       width: double.infinity,
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        meal.title,
+                        widget.meal.title,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -85,7 +120,7 @@ class MealCard extends StatelessWidget {
                             child: Icon(Icons.videogame_asset),
                           ),
                           Text(
-                            meal.getComplexity,
+                            widget.meal.getComplexity,
                             style: TextStyle(
                               fontSize: 12,
                             ),
@@ -99,7 +134,7 @@ class MealCard extends StatelessWidget {
                             child: Icon(Icons.attach_money),
                           ),
                           Text(
-                            meal.getAffordability,
+                            widget.meal.getAffordability,
                             style: TextStyle(
                               fontSize: 12,
                             ),
@@ -113,7 +148,7 @@ class MealCard extends StatelessWidget {
                             child: Icon(Icons.timer),
                           ),
                           Text(
-                            meal.getDuration,
+                            widget.meal.getDuration,
                             style: TextStyle(
                               fontSize: 12,
                             ),

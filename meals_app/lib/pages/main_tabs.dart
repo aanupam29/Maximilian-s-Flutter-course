@@ -6,8 +6,9 @@ import 'package:meals_app/widgets/main_drawer.dart';
 class MainTabs extends StatefulWidget {
   final Function changeTitle;
   final Map<String, bool> settings;
+  final List<String> favoriteMeals;
 
-  MainTabs({this.changeTitle, this.settings});
+  MainTabs({this.changeTitle, this.settings, this.favoriteMeals});
 
   @override
   _MainTabsState createState() => _MainTabsState();
@@ -44,7 +45,10 @@ class _MainTabsState extends State<MainTabs>
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              CategoriesPage(settings: widget.settings),
+              CategoriesPage(
+                settings: widget.settings,
+                favoriteMeals: widget.favoriteMeals,
+              ),
               FavoritesPage(),
             ],
           ),

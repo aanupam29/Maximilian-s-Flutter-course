@@ -5,8 +5,25 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/category_card.dart';
 import 'package:meals_app/widgets/meal_card.dart';
 
-class MealsPage extends StatelessWidget {
+class MealsPage extends StatefulWidget {
+  @override
+  _MealsPageState createState() => _MealsPageState();
+}
+
+class _MealsPageState extends State<MealsPage> {
   final List<Meal> allMeals = DUMMY_MEALS;
+  List<String> favoriteMeals;
+
+  void addFavoriteMeal(String id) {
+    setState(() {
+      if (favoriteMeals.contains(id)) {
+        favoriteMeals.removeAt(favoriteMeals.indexOf(id));
+      } else {
+        favoriteMeals.add(id);
+      }
+    });
+    print(favoriteMeals);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +31,7 @@ class MealsPage extends StatelessWidget {
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
     final Category selectedCategory = arguments['selectedCategory'];
     final Map<String, bool> settings = arguments['settings'];
-    print(settings);
+    favoriteMeals = arguments['favoriteMeals'];
 
     final List<Meal> categoryMeals = DUMMY_MEALS
         .where(
@@ -47,24 +64,28 @@ class MealsPage extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: categoryMeals.length > 0
-                  ? ListView.builder(
-                      itemBuilder: (BuildContext _, index) => MealCard(
-                        meal: categoryMeals[index],
+            child: categoryMeals.length > 0
+                ? ListView.builder(
+                    itemBuilder: (BuildContext _, index) => MealCard(
+                      meal: categoryMeals[index],
+                      isFavorite:
+                          favoriteMeals.contains(categoryMeals[index].id),
+                      favorite: addFavoriteMeal,
+                    ),
+                    itemCount: categoryMeals.length,
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Text(
+                      'There is no meal that match your filters!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
                       ),
-                      itemCount: categoryMeals.length,
-                    )
-                  : Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Text(
-                        'There is no meal that match your filters!',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ))
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+          )
         ],
       ),
     );

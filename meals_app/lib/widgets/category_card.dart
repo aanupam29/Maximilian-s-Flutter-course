@@ -5,12 +5,10 @@ class CategoryCard extends StatelessWidget {
   final Category category;
   final bool isHero;
   final Map<String, bool> settings;
+  final List<String> favoriteMeals;
 
-  CategoryCard({
-    this.category,
-    this.isHero = false,
-    this.settings,
-  });
+  CategoryCard(
+      {this.category, this.isHero = false, this.settings, this.favoriteMeals});
 
   List<Color> _getColors() {
     final Color color = category.colors[0];
@@ -26,7 +24,11 @@ class CategoryCard extends StatelessWidget {
       Navigator.pushNamed(
         context,
         '/meals',
-        arguments: {'selectedCategory': category, 'settings': settings},
+        arguments: {
+          'selectedCategory': category,
+          'settings': settings,
+          'favoriteMeals': favoriteMeals
+        },
       );
     }
   }

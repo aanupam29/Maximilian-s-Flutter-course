@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HowTo extends StatelessWidget {
-  List<String> steps;
+  final List<String> steps;
 
   HowTo({this.steps});
 

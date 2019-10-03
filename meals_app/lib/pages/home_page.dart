@@ -12,6 +12,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   Widget currentScreen;
   String title = 'Categories';
+  List<String> favoriteMeals = [];
   Map<String, bool> settings = {
     "glutenFree": false,
     "lactoseFree": false,
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage>
     currentScreen = MainTabs(
       changeTitle: this.changePageTitle,
       settings: settings,
+      favoriteMeals: favoriteMeals,
     );
   }
 
@@ -66,6 +68,7 @@ class _HomePageState extends State<HomePage>
         currentScreen = MainTabs(
           changeTitle: this.changePageTitle,
           settings: this.settings,
+          favoriteMeals: favoriteMeals,
         );
         changePageTitle('Categories');
         break;

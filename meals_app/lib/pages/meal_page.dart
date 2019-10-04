@@ -17,6 +17,7 @@ class _MealPageState extends State<MealPage> {
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
+
     if (meal == null && favorite == null && isFavorite == null) {
       this.meal = arguments['meal'];
       this.favorite = arguments['favorite'];

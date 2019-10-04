@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/pages/categories_page.dart';
 import 'package:meals_app/pages/favorites_page.dart';
-import 'package:meals_app/widgets/main_drawer.dart';
 
 class MainTabs extends StatefulWidget {
   final Function changeTitle;
   final Map<String, bool> settings;
-  final List<Meal> favoriteMeals;
 
-  MainTabs({this.changeTitle, this.settings, this.favoriteMeals});
+  MainTabs({this.changeTitle, this.settings});
 
   @override
   _MainTabsState createState() => _MainTabsState();
@@ -18,12 +16,24 @@ class MainTabs extends StatefulWidget {
 class _MainTabsState extends State<MainTabs>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  List<Meal> rootFavoriteMeals = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabChange);
+  }
+
+  void addFavoriteMealToRoot(Meal meal) {
+    setState(() {
+      if (rootFavoriteMeals.contains(meal)) {
+        rootFavoriteMeals.removeAt(rootFavoriteMeals.indexOf(meal));
+      } else {
+        rootFavoriteMeals.add(meal);
+      }
+      print(rootFavoriteMeals);
+    });
   }
 
   void _handleTabChange() {
@@ -48,9 +58,12 @@ class _MainTabsState extends State<MainTabs>
             children: <Widget>[
               CategoriesPage(
                 settings: widget.settings,
-                favoriteMeals: widget.favoriteMeals,
+                rootFavoriteMeals: rootFavoriteMeals,
+                addFavoriteMealToRoot: addFavoriteMealToRoot,
               ),
-              FavoritesPage(),
+              FavoritesPage(
+                previouslyFavoritedMeals: rootFavoriteMeals,
+              ),
             ],
           ),
         ),

@@ -6,10 +6,16 @@ class CategoryCard extends StatelessWidget {
   final Category category;
   final bool isHero;
   final Map<String, bool> settings;
-  final List<Meal> favoriteMeals;
+  final List<Meal> rootFavoriteMeals;
+  final Function addFavoriteMealToRoot;
 
-  CategoryCard(
-      {this.category, this.isHero = false, this.settings, this.favoriteMeals});
+  CategoryCard({
+    this.category,
+    this.isHero = false,
+    this.settings,
+    this.rootFavoriteMeals,
+    this.addFavoriteMealToRoot,
+  });
 
   List<Color> _getColors() {
     final Color color = category.colors[0];
@@ -28,7 +34,8 @@ class CategoryCard extends StatelessWidget {
         arguments: {
           'selectedCategory': category,
           'settings': settings,
-          'favoriteMeals': favoriteMeals
+          'rootFavoriteMeals': rootFavoriteMeals,
+          'addFavoriteMealToRoot': addFavoriteMealToRoot
         },
       );
     }

@@ -13,16 +13,12 @@ class MealsPage extends StatefulWidget {
 class _MealsPageState extends State<MealsPage> {
   final List<Meal> allMeals = DUMMY_MEALS;
   List<Meal> favoriteMeals;
+  Function addFavoriteMealToRoot;
 
   void addFavoriteMeal(Meal meal) {
     setState(() {
-      if (favoriteMeals.contains(meal)) {
-        favoriteMeals.removeAt(favoriteMeals.indexOf(meal));
-      } else {
-        favoriteMeals.add(meal);
-      }
+      addFavoriteMealToRoot(meal);
     });
-    print(favoriteMeals);
   }
 
   @override
@@ -31,7 +27,9 @@ class _MealsPageState extends State<MealsPage> {
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
     final Category selectedCategory = arguments['selectedCategory'];
     final Map<String, bool> settings = arguments['settings'];
-    favoriteMeals = arguments['favoriteMeals'];
+
+    favoriteMeals = arguments['rootFavoriteMeals'];
+    addFavoriteMealToRoot = arguments['addFavoriteMealToRoot'];
 
     final List<Meal> categoryMeals = DUMMY_MEALS
         .where(

@@ -4,12 +4,23 @@ import 'package:meals_app/models/category.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/category_card.dart';
 
-class CategoriesPage extends StatelessWidget {
-  final List<Category> categories = DUMMY_CATEGORIES;
+class CategoriesPage extends StatefulWidget {
   final Map<String, bool> settings;
-  final List<Meal> favoriteMeals;
+  final List<Meal> rootFavoriteMeals;
+  final Function addFavoriteMealToRoot;
 
-  CategoriesPage({this.settings, this.favoriteMeals});
+  CategoriesPage({
+    this.settings,
+    this.rootFavoriteMeals,
+    this.addFavoriteMealToRoot,
+  });
+
+  @override
+  _CategoriesPageState createState() => _CategoriesPageState();
+}
+
+class _CategoriesPageState extends State<CategoriesPage> {
+  final List<Category> categories = DUMMY_CATEGORIES;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +33,9 @@ class CategoriesPage extends StatelessWidget {
                 tag: "categoryHero${category.id}",
                 child: CategoryCard(
                   category: category,
-                  settings: settings,
-                  favoriteMeals: favoriteMeals,
+                  settings: widget.settings,
+                  rootFavoriteMeals: widget.rootFavoriteMeals,
+                  addFavoriteMealToRoot: widget.addFavoriteMealToRoot,
                 ),
               ),
             )

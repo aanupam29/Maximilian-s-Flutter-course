@@ -62,7 +62,8 @@ class _MainTabsState extends State<MainTabs>
                 addFavoriteMealToRoot: addFavoriteMealToRoot,
               ),
               FavoritesPage(
-                previouslyFavoritedMeals: rootFavoriteMeals,
+                rootFavoriteMeals: rootFavoriteMeals,
+                addFavoriteMealToRoot: addFavoriteMealToRoot,
               ),
             ],
           ),

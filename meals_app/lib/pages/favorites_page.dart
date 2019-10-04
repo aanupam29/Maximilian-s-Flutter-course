@@ -35,7 +35,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               Text(
                 "Favorite Meals",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),

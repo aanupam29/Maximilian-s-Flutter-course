@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // custom
 import 'package:flutter_basics/classes/Question.dart';
-import 'package:flutter_basics/widgets/answer.dart';
+import 'package:flutter_basics/widgets/answers.dart';
+import 'package:flutter_basics/widgets/reset_button.dart';
+import 'package:flutter_basics/widgets/selected_answers.dart';
 
 void main() => runApp(BasicsApp());
 
@@ -32,6 +34,13 @@ class _BasicsAppState extends State<BasicsApp> {
     });
   }
 
+  void _onResetApp() {
+    setState(() {
+      questionIndex = 0;
+      answers = [];
+    });
+  }
+
   String _getHeaderText() {
     return questionIndex < this.questions.length
         ? this.questions[this.questionIndex].question
@@ -40,52 +49,14 @@ class _BasicsAppState extends State<BasicsApp> {
 
   Widget _renderResetButton() {
     return questionIndex >= this.questions.length
-        ? Container(
-            child: FlatButton(
-              child: Text('Reset'),
-              onPressed: () {
-                setState(() {
-                  questionIndex = 0;
-                  answers = [];
-                });
-              },
-            ),
-          )
+        ? ResetButton(this._onResetApp)
         : Container();
   }
 
   Widget _getAnswersOrAnswered() {
     return questionIndex < this.questions.length
-        ? Column(
-            children: this
-                .questions[questionIndex]
-                .answers
-                .map(
-                  (answer) => Answer(
-                    answer,
-                    () {
-                      this._onPressAnswerButton(answer: answer);
-                    },
-                  ),
-                )
-                .toList(),
-          )
-        : Column(
-            children: this.answers.map((answer) {
-              int index = answers.indexOf(answer);
-
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(questions[index].question),
-                  Text(
-                    ' ' + answer,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              );
-            }).toList(),
-          );
+        ? Answers(questions, questionIndex, _onPressAnswerButton)
+        : SelectedAnswers(answers, questions);
   }
 
   @override

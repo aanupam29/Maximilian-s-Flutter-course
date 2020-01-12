@@ -14,8 +14,10 @@ class BasicsApp extends StatefulWidget {
 
 class _BasicsAppState extends State<BasicsApp> {
   final List<Question> questions = [
-    Question('What\'s your favorite color?', ['Blue', 'Red', 'Green']),
-    Question('What\'s your favorite meal?', ['Pizza', 'Meat', 'Hamburger']),
+    Question('What\'s your favorite color?',
+        ['Blue', 'Red', 'Green', 'Pink', 'Yellow']),
+    Question('What\'s your favorite meal?',
+        ['Pizza', 'Meat', 'Hamburger', 'Rice with Meat']),
     Question('What\'s your favorite animal?', ['Dog', 'Cat', 'Horse'])
   ];
 
@@ -71,7 +73,20 @@ class _BasicsAppState extends State<BasicsApp> {
                 .toList(),
           )
         : Column(
-            children: this.answers.map((answer) => Text(answer)).toList(),
+            children: this.answers.map((answer) {
+              int index = answers.indexOf(answer);
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(questions[index].question),
+                  Text(
+                    ' ' + answer,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              );
+            }).toList(),
           );
   }
 

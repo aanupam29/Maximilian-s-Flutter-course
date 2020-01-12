@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // custom
 import 'package:flutter_basics/classes/Question.dart';
+import 'package:flutter_basics/widgets/answer.dart';
 
 void main() => runApp(BasicsApp());
 
@@ -12,7 +13,7 @@ class BasicsApp extends StatefulWidget {
 }
 
 class _BasicsAppState extends State<BasicsApp> {
-  List<Question> questions = [
+  final List<Question> questions = [
     Question('What\'s your favorite color?', ['Blue', 'Red', 'Green']),
     Question('What\'s your favorite meal?', ['Pizza', 'Meat', 'Hamburger']),
     Question('What\'s your favorite animal?', ['Dog', 'Cat', 'Horse'])
@@ -60,14 +61,11 @@ class _BasicsAppState extends State<BasicsApp> {
                 .questions[questionIndex]
                 .answers
                 .map(
-                  (answer) => Container(
-                    width: double.infinity,
-                    child: RaisedButton(
-                      child: Text(answer),
-                      onPressed: () {
-                        _onPressAnswerButton(answer: answer);
-                      },
-                    ),
+                  (answer) => Answer(
+                    answer,
+                    () {
+                      this._onPressAnswerButton(answer: answer);
+                    },
                   ),
                 )
                 .toList(),

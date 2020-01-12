@@ -37,6 +37,22 @@ class _BasicsAppState extends State<BasicsApp> {
         : 'Your Answers';
   }
 
+  Widget _renderResetButton() {
+    return questionIndex >= this.questions.length
+        ? Container(
+            child: FlatButton(
+              child: Text('Reset'),
+              onPressed: () {
+                setState(() {
+                  questionIndex = 0;
+                  answers = [];
+                });
+              },
+            ),
+          )
+        : Container();
+  }
+
   Widget _getAnswersOrAnswered() {
     return questionIndex < this.questions.length
         ? Column(
@@ -44,11 +60,14 @@ class _BasicsAppState extends State<BasicsApp> {
                 .questions[questionIndex]
                 .answers
                 .map(
-                  (answer) => RaisedButton(
-                    child: Text(answer),
-                    onPressed: () {
-                      _onPressAnswerButton(answer: answer);
-                    },
+                  (answer) => Container(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      child: Text(answer),
+                      onPressed: () {
+                        _onPressAnswerButton(answer: answer);
+                      },
+                    ),
                   ),
                 )
                 .toList(),
@@ -66,18 +85,28 @@ class _BasicsAppState extends State<BasicsApp> {
         appBar: AppBar(
           title: Text('Flutter Basics'),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(this._getHeaderText()),
-                this._getAnswersOrAnswered()
-              ],
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      this._getHeaderText(),
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                    this._getAnswersOrAnswered()
+                  ],
+                ),
+              ),
             ),
-          ),
+            this._renderResetButton()
+          ],
         ),
       ),
     );

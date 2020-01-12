@@ -30,11 +30,9 @@ class _BasicsAppState extends State<BasicsApp> {
       questionIndex++;
       this.answers.add(answer);
     });
-    print(answer);
   }
 
   String _getHeaderText() {
-    print(this.questionIndex);
     return questionIndex < this.questions.length
         ? this.questions[this.questionIndex].question
         : 'Your Answers';
@@ -92,7 +90,6 @@ class _BasicsAppState extends State<BasicsApp> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

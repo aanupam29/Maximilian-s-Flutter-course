@@ -15,29 +15,32 @@ class TransactionItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 8),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Center(
-                  child: Text(
-                    value.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 80),
+              child: Container(
+                margin: EdgeInsets.only(right: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Center(
+                    child: Text(
+                      value.toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(
-                  color: Colors.green,
-                  width: 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: Colors.green,
+                    width: 2,
+                  ),
                 ),
+                padding: EdgeInsets.only(top: 6, bottom: 6),
               ),
-              padding: EdgeInsets.only(top: 6, bottom: 6),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionItem extends StatelessWidget {
   final String description;
@@ -6,6 +7,13 @@ class TransactionItem extends StatelessWidget {
   final double value;
 
   TransactionItem({this.description, this.datetime, this.value});
+
+  String _formatDatetime() {
+    DateFormat formater = DateFormat('dd/MM/yyyy');
+    String dateString = formater.format(this.datetime);
+
+    return dateString;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class TransactionItem extends StatelessWidget {
                   padding: const EdgeInsets.all(4.0),
                   child: Center(
                     child: Text(
-                      value.toString(),
+                      "\$ ${value.toString()}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.green,
@@ -52,7 +60,7 @@ class TransactionItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  datetime.toString(),
+                  this._formatDatetime(),
                   style: TextStyle(
                     color: Colors.grey,
                   ),

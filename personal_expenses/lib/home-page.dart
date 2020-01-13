@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/models/Transaction.dart';
+import 'package:personal_expenses/widgets/chart.dart';
 import 'package:personal_expenses/widgets/transaction-item.dart';
+import 'package:personal_expenses/widgets/transactions-list.dart';
 
 class HomePage extends StatelessWidget {
   final List<Transaction> transactions = [
@@ -36,19 +38,6 @@ class HomePage extends StatelessWidget {
     ),
   ];
 
-  List<Widget> getTransactions() {
-    return this
-        .transactions
-        .map(
-          (Transaction transaction) => TransactionItem(
-            datetime: transaction.datetime,
-            value: transaction.value,
-            description: transaction.description,
-          ),
-        )
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,21 +48,8 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('Chart'),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('List of Transactions'),
-              ),
-            ),
-            Column(
-              children: this.getTransactions(),
-            )
+            Chart(),
+            TransactionsList(this.transactions),
           ],
         ),
       ),

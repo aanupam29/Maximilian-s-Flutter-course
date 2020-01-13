@@ -31,7 +31,7 @@ class TransactionItem extends StatelessWidget {
                   padding: const EdgeInsets.all(4.0),
                   child: Center(
                     child: Text(
-                      "\$ ${value.toString()}",
+                      "\$ ${value.toStringAsFixed(2)}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.green,

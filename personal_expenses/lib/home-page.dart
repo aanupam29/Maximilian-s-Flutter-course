@@ -59,8 +59,12 @@ class _HomePageState extends State<HomePage> {
   void _showBottomSheet(BuildContext contect) {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext modalContext) {
-          return AddTransaction(this.onAddTransaction);
+          return FractionallySizedBox(
+            heightFactor: 0.8,
+            child: AddTransaction(this.onAddTransaction),
+          );
         });
   }
 

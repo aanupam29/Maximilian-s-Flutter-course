@@ -72,7 +72,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expenses'),
+        title: Text(
+          'Personal Expenses',
+          style: TextStyle(fontFamily: 'Quicksand'),
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: () {

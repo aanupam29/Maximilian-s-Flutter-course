@@ -7,19 +7,6 @@ class TransactionsList extends StatelessWidget {
 
   TransactionsList(this.transactions);
 
-  List<Widget> _renderTransactions() {
-    return this
-        .transactions
-        .map(
-          (Transaction transaction) => TransactionItem(
-            datetime: transaction.datetime,
-            value: transaction.value,
-            description: transaction.description,
-          ),
-        )
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(

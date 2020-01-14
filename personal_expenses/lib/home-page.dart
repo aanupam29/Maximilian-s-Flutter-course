@@ -65,6 +65,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal Expenses'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            color: Colors.white,
+            icon: Icon(Icons.add),
+          )
+        ],
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) =>
@@ -77,13 +84,17 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: <Widget>[
                   Chart(),
+                  AddTransaction(this.onAddTransaction),
                   TransactionsList(this.transactions),
-                  AddTransaction(this.onAddTransaction)
                 ],
               ),
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
       ),
     );
   }

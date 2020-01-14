@@ -60,6 +60,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showBottomSheet(BuildContext contect) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext modalContext) {
+          return AddTransaction(this.onAddTransaction);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +75,9 @@ class _HomePageState extends State<HomePage> {
         title: Text('Personal Expenses'),
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              this._showBottomSheet(context);
+            },
             color: Colors.white,
             icon: Icon(Icons.add),
           )
@@ -93,7 +103,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          this._showBottomSheet(context);
+        },
         child: Icon(Icons.add),
       ),
     );

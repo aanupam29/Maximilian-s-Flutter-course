@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:personal_expenses/models/Transaction.dart';
 import 'package:personal_expenses/widgets/add-transaction.dart';
 import 'package:personal_expenses/widgets/chart.dart';
-import 'package:personal_expenses/widgets/transaction-item.dart';
 import 'package:personal_expenses/widgets/transactions-list.dart';
 
-class HomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Transaction> transactions = [
     Transaction(
       id: 1,
       description: 'Bread',
@@ -39,6 +43,23 @@ class HomePage extends StatelessWidget {
     ),
   ];
 
+  int getNextId() {
+    return this.transactions.last.id + 1;
+  }
+
+  void onAddTransaction(String description, double value) {
+    setState(() {
+      this.transactions.add(
+            Transaction(
+              description: description,
+              value: value,
+              datetime: DateTime.now(),
+              id: this.getNextId(),
+            ),
+          );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,18 +70,19 @@ class HomePage extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints viewportConstraints) =>
             SingleChildScrollView(
           child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ConstrainedBox(
-                constraints:
-                    BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                child: Column(
-                  children: <Widget>[
-                    Chart(),
-                    TransactionsList(this.transactions),
-                    AddTransaction()
-                  ],
-                ),
-              )),
+            padding: const EdgeInsets.all(10.0),
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(minHeight: viewportConstraints.maxHeight),
+              child: Column(
+                children: <Widget>[
+                  Chart(),
+                  TransactionsList(this.transactions),
+                  AddTransaction(this.onAddTransaction)
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

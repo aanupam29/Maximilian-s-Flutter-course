@@ -53,6 +53,7 @@ class _AddTransactionState extends State<AddTransaction> {
     return Container(
       width: double.infinity,
       child: Card(
+        elevation: 6,
         child: Column(
           children: <Widget>[
             Text(

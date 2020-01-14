@@ -18,6 +18,7 @@ class TransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 8, left: 4, right: 4),
         child: Row(

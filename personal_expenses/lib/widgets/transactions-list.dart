@@ -22,15 +22,18 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Text(
-            'Transactions',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          ...this._renderTransactions(),
-        ],
+    return Container(
+      height: 400,
+      child: Card(
+        child: ListView(
+          children: [
+            Text(
+              'Transactions',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            ...this._renderTransactions(),
+          ],
+        ),
       ),
     );
   }

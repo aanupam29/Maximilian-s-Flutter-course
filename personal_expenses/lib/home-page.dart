@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/models/Transaction.dart';
+import 'package:personal_expenses/widgets/add-transaction.dart';
 import 'package:personal_expenses/widgets/chart.dart';
 import 'package:personal_expenses/widgets/transaction-item.dart';
 import 'package:personal_expenses/widgets/transactions-list.dart';
@@ -50,6 +51,7 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             Chart(),
             TransactionsList(this.transactions),
+            AddTransaction()
           ],
         ),
       ),

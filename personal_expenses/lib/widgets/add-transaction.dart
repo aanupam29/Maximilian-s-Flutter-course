@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddTransaction extends StatefulWidget {
   final Function onAddTransaction;
@@ -11,16 +12,15 @@ class AddTransaction extends StatefulWidget {
 
 class _AddTransactionState extends State<AddTransaction> {
   TextEditingController descriptionController = TextEditingController();
-
   TextEditingController valueController = TextEditingController();
+  DateTime datetime = DateTime.now();
 
-  void onAddTransaction() {
+  void _onAddTransaction() {
     if (this.descriptionController.text.length > 0 &&
-        this.valueController.text.length > 0) {
-      this.widget.onAddTransaction(
-            this.descriptionController.text,
-            double.parse(this.valueController.text),
-          );
+        this.valueController.text.length > 0 &&
+        this.datetime != null) {
+      this.widget.onAddTransaction(this.descriptionController.text,
+          double.parse(this.valueController.text), this.datetime);
 
       this.descriptionController.clear();
       this.valueController.clear();
@@ -33,8 +33,8 @@ class _AddTransactionState extends State<AddTransaction> {
           // retorna um objeto do tipo Dialog
           return AlertDialog(
             title: new Text("Alert"),
-            content:
-                new Text("You should provide a valid description and value!"),
+            content: new Text(
+                "You should provide a valid description, date and value!"),
             actions: <Widget>[
               // define os botões na base do dialogo
               new FlatButton(
@@ -48,6 +48,27 @@ class _AddTransactionState extends State<AddTransaction> {
         },
       );
     }
+  }
+
+  Future<Null> _openDatePicker() async {
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: datetime,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+
+    if (pickedDate != null) {
+      setState(() {
+        this.datetime = pickedDate;
+      });
+    }
+  }
+
+  String _formatDate() {
+    DateFormat formater = DateFormat('dd/MM/yyyy');
+    return this.datetime != null
+        ? formater.format(this.datetime)
+        : 'Pick a Date!';
   }
 
   @override
@@ -69,7 +90,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   child: TextField(
                     controller: descriptionController,
                     decoration: InputDecoration(labelText: 'Description'),
-                    onSubmitted: (String _) => this.onAddTransaction(),
+                    onSubmitted: (String _) => this._onAddTransaction(),
                   ),
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 ),
@@ -78,7 +99,22 @@ class _AddTransactionState extends State<AddTransaction> {
                     controller: valueController,
                     decoration: InputDecoration(labelText: 'Value'),
                     keyboardType: TextInputType.number,
-                    onSubmitted: (String _) => this.onAddTransaction(),
+                    onSubmitted: (String _) => this._onAddTransaction(),
+                  ),
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(_formatDate()),
+                      IconButton(
+                        onPressed: () {
+                          this._openDatePicker();
+                        },
+                        icon: Icon(Icons.calendar_today),
+                      )
+                    ],
                   ),
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 ),
@@ -87,7 +123,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     'Add Transaction',
                     style: TextStyle(color: Colors.blueGrey),
                   ),
-                  onPressed: this.onAddTransaction,
+                  onPressed: this._onAddTransaction,
                 )
               ],
             )

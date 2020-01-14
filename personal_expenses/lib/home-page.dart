@@ -38,13 +38,13 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  void onAddTransaction(String description, double value) {
+  void onAddTransaction(String description, double value, DateTime datetime) {
     setState(() {
       this.transactions.add(
             Transaction(
               description: description,
               value: value,
-              datetime: DateTime.now(),
+              datetime: datetime,
             ),
           );
     });

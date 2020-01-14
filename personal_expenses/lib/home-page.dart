@@ -94,7 +94,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: <Widget>[
                   Chart(),
-                  AddTransaction(this.onAddTransaction),
                   TransactionsList(this.transactions),
                 ],
               ),

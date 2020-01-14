@@ -24,6 +24,8 @@ class _AddTransactionState extends State<AddTransaction> {
 
       this.descriptionController.clear();
       this.valueController.clear();
+
+      Navigator.of(context).pop();
     } else {
       showDialog(
         context: context,

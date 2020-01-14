@@ -45,14 +45,22 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Personal Expenses'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Chart(),
-            TransactionsList(this.transactions),
-            AddTransaction()
-          ],
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) =>
+            SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ConstrainedBox(
+                constraints:
+                    BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                child: Column(
+                  children: <Widget>[
+                    Chart(),
+                    TransactionsList(this.transactions),
+                    AddTransaction()
+                  ],
+                ),
+              )),
         ),
       ),
     );

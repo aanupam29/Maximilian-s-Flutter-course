@@ -14,6 +14,40 @@ class _AddTransactionState extends State<AddTransaction> {
 
   TextEditingController valueController = TextEditingController();
 
+  void onAddTransaction() {
+    if (this.descriptionController.text.length > 0 &&
+        this.valueController.text.length > 0) {
+      this.widget.onAddTransaction(
+            this.descriptionController.text,
+            double.parse(this.valueController.text),
+          );
+
+      this.descriptionController.clear();
+      this.valueController.clear();
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // retorna um objeto do tipo Dialog
+          return AlertDialog(
+            title: new Text("Alert"),
+            content:
+                new Text("You should provide a valid description and value!"),
+            actions: <Widget>[
+              // define os botões na base do dialogo
+              new FlatButton(
+                child: new Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +66,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   child: TextField(
                     controller: descriptionController,
                     decoration: InputDecoration(labelText: 'Description'),
+                    onSubmitted: (String _) => this.onAddTransaction(),
                   ),
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 ),
@@ -40,6 +75,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     controller: valueController,
                     decoration: InputDecoration(labelText: 'Value'),
                     keyboardType: TextInputType.number,
+                    onSubmitted: (String _) => this.onAddTransaction(),
                   ),
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 ),
@@ -48,15 +84,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     'Add Transaction',
                     style: TextStyle(color: Colors.blueGrey),
                   ),
-                  onPressed: () {
-                    this.widget.onAddTransaction(
-                          this.descriptionController.text,
-                          double.parse(this.valueController.text),
-                        );
-
-                    this.descriptionController.clear();
-                    this.valueController.clear();
-                  },
+                  onPressed: this.onAddTransaction,
                 )
               ],
             )

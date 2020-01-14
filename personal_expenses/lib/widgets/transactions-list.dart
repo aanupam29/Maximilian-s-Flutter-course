@@ -22,15 +22,15 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Transactions',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Container(
-          height: 400,
-          child: Card(
+    return Card(
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Transactions',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          Container(
+            height: 400,
             child: ListView.builder(
               itemBuilder: (BuildContext listViewContext, int index) {
                 Transaction transaction = transactions[index];
@@ -43,8 +43,8 @@ class TransactionsList extends StatelessWidget {
               itemCount: transactions.length,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

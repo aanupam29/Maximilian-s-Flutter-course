@@ -78,22 +78,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Personal Expenses',
-          style: TextStyle(fontFamily: 'Quicksand'),
-        ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              this._showBottomSheet(context);
-            },
-            color: Colors.white,
-            icon: Icon(Icons.add),
-          )
-        ],
+    AppBar appBar = AppBar(
+      title: Text(
+        'Personal Expenses',
+        style: TextStyle(fontFamily: 'Quicksand'),
       ),
+      actions: <Widget>[
+        IconButton(
+          onPressed: () {
+            this._showBottomSheet(context);
+          },
+          color: Colors.white,
+          icon: Icon(Icons.add),
+        )
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) =>
             SingleChildScrollView(
@@ -104,8 +106,8 @@ class _HomePageState extends State<HomePage> {
                   BoxConstraints(minHeight: viewportConstraints.maxHeight),
               child: Column(
                 children: <Widget>[
-                  Chart(this.getRecentTransactions()),
-                  TransactionsList(this.transactions, this.onRemoveTransaction),
+                  Chart(this.getRecentTransactions(), appBar.preferredSize.height),
+                  TransactionsList(this.transactions, this.onRemoveTransaction, appBar.preferredSize.height),
                 ],
               ),
             ),

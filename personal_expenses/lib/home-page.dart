@@ -14,27 +14,27 @@ class _HomePageState extends State<HomePage> {
     Transaction(
       description: 'Bread',
       value: .89,
-      datetime: new DateTime(2019, 01, 11),
+      datetime: new DateTime(2020, 1, 11),
     ),
     Transaction(
       description: 'Meat',
       value: 4.89,
-      datetime: new DateTime(2019, 01, 10),
+      datetime: new DateTime(2020, 1, 10),
     ),
     Transaction(
       description: 'Milk',
       value: 2.00,
-      datetime: new DateTime(2019, 01, 10),
+      datetime: new DateTime(2020, 1, 10),
     ),
     Transaction(
       description: 'Candy',
       value: 121.50,
-      datetime: new DateTime(2019, 01, 8),
+      datetime: new DateTime(2020, 1, 8),
     ),
     Transaction(
       description: 'Sauce',
       value: .29,
-      datetime: new DateTime(2019, 01, 7),
+      datetime: new DateTime(2020, 1, 7),
     ),
   ];
 
@@ -68,6 +68,14 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  List<Transaction> getRecentTransactions() {
+    DateTime limitDay = DateTime.now().subtract(Duration(days: 7));
+
+    return this.transactions.where((transaction) {
+      return transaction.datetime.isAfter(limitDay);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   BoxConstraints(minHeight: viewportConstraints.maxHeight),
               child: Column(
                 children: <Widget>[
-                  Chart(),
+                  Chart(this.getRecentTransactions()),
                   TransactionsList(this.transactions, this.onRemoveTransaction),
                 ],
               ),

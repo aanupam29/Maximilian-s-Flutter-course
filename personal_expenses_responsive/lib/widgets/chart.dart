@@ -37,45 +37,32 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.groupedTransactionValues());
-
     return Container(
       height: (MediaQuery.of(context).size.height -
               MediaQuery.of(context).padding.top -
               appBarHeight) *
-          0.4,
+          0.3,
       width: double.infinity,
       child: Card(
-        elevation: 6,
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Chart',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            !this.recentTransactions.isEmpty
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: groupedTransactionValues().map((day) {
-                      return Flexible(
-                        fit: FlexFit.tight,
-                        child: ChartBar(
+          elevation: 6,
+          child: !this.recentTransactions.isEmpty
+              ? SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: groupedTransactionValues().map(
+                      (day) {
+                        return ChartBar(
                           amount: day['amount'],
                           label: day['day'],
                           amountPercentageOfTotal: ((day['amount'] as double) /
                               this.getMaxSpending()),
-                        ),
-                      );
-                    }).toList(),
-                  )
-                : Text('Start Adding Transactions!')
-          ],
-        ),
-      ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                )
+              : Text('Start Adding Transactions!')),
     );
   }
 }

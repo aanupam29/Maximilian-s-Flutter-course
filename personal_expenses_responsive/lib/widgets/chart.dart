@@ -44,25 +44,23 @@ class Chart extends StatelessWidget {
           0.3,
       width: double.infinity,
       child: Card(
-          elevation: 6,
-          child: !this.recentTransactions.isEmpty
-              ? SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: groupedTransactionValues().map(
-                      (day) {
-                        return ChartBar(
-                          amount: day['amount'],
-                          label: day['day'],
-                          amountPercentageOfTotal: ((day['amount'] as double) /
-                              this.getMaxSpending()),
-                        );
-                      },
-                    ).toList(),
-                  ),
-                )
-              : Text('Start Adding Transactions!')),
+        elevation: 6,
+        child: !this.recentTransactions.isEmpty
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: groupedTransactionValues().map(
+                  (day) {
+                    return ChartBar(
+                      amount: day['amount'],
+                      label: day['day'],
+                      amountPercentageOfTotal:
+                          ((day['amount'] as double) / this.getMaxSpending()),
+                    );
+                  },
+                ).toList(),
+              )
+            : Text('Start Adding Transactions!'),
+      ),
     );
   }
 }

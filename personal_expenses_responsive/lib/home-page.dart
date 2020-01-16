@@ -10,6 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool showChart = true;
+
   List<Transaction> transactions = [
     Transaction(
       description: 'Bread',
@@ -94,6 +96,8 @@ class _HomePageState extends State<HomePage> {
       ],
     );
 
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
       appBar: appBar,
       body: LayoutBuilder(
@@ -105,11 +109,38 @@ class _HomePageState extends State<HomePage> {
               constraints:
                   BoxConstraints(minHeight: viewportConstraints.maxHeight),
               child: Column(
-                children: <Widget>[
-                  Chart(this.getRecentTransactions(), appBar.preferredSize.height),
-                  TransactionsList(this.transactions, this.onRemoveTransaction, appBar.preferredSize.height),
-                ],
-              ),
+                  children: orientation == Orientation.landscape
+                      ? [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('Show Chart?'),
+                              Switch(
+                                value: this.showChart,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    this.showChart = !this.showChart;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          this.showChart
+                              ? Chart(this.getRecentTransactions(),
+                                  appBar.preferredSize.height, orientation)
+                              : TransactionsList(
+                                  this.transactions,
+                                  this.onRemoveTransaction,
+                                  appBar.preferredSize.height)
+                        ]
+                      : [
+                          Chart(this.getRecentTransactions(),
+                              appBar.preferredSize.height, orientation),
+                          TransactionsList(
+                              this.transactions,
+                              this.onRemoveTransaction,
+                              appBar.preferredSize.height)
+                        ]),
             ),
           ),
         ),

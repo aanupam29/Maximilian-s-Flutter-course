@@ -6,8 +6,9 @@ import 'package:personal_expenses/widgets/chart_bar.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
   final double appBarHeight;
+  final Orientation orientation;
 
-  Chart(this.recentTransactions, this.appBarHeight);
+  Chart(this.recentTransactions, this.appBarHeight, this.orientation);
 
   List<Map<String, Object>> groupedTransactionValues() {
     return List.generate(7, (int index) {
@@ -41,7 +42,7 @@ class Chart extends StatelessWidget {
       height: (MediaQuery.of(context).size.height -
               MediaQuery.of(context).padding.top -
               appBarHeight) *
-          0.3,
+          (this.orientation == Orientation.landscape ? 0.6 : 0.3),
       width: double.infinity,
       child: Card(
         elevation: 6,

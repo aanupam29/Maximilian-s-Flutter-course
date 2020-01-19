@@ -10,8 +10,8 @@ class CategoriesPage extends StatelessWidget {
         title: Text('Categories'),
       ),
       body: Container(
-        padding: EdgeInsets.all(6),
         child: GridView(
+          padding: const EdgeInsets.all(10),
           children: DUMMY_CATEGORIES
               .map((category) => CategoryItem(
                     color: category.color,

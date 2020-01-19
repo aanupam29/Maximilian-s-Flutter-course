@@ -60,11 +60,18 @@ class MealDetailScreen extends StatelessWidget {
             itemBuilder: (BuildContext _, int index) {
               return Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: Text("#${index + 1}"),
-                  ),
-                  title: Text(this.meal.steps[index]),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text("#${index + 1}"),
+                      ),
+                      title: Text(this.meal.steps[index]),
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                    )
+                  ],
                 ),
               );
             },

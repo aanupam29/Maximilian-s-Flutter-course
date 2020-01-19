@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/categories-page.dart';
+import 'package:meals_app/screens/categories-screen.dart';
 
 void main() => runApp(MealsApp());
 
@@ -20,13 +20,13 @@ class MealsApp extends StatelessWidget {
                 color: Color.fromRGBO(20, 51, 51, 1),
               ),
               title: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontFamily: 'RobotoCondensed',
                 fontWeight: FontWeight.bold,
               ),
             ),
       ),
-      home: CategoriesPage(),
+      home: CategoriesScreen(),
       title: 'Meals App',
     );
   }

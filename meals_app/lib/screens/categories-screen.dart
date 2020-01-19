@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/widgets/category-item.dart';
 import '../data/dummy-data.dart';
 
-class CategoriesPage extends StatelessWidget {
+class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

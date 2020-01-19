@@ -10,7 +10,7 @@ class MealItem extends StatelessWidget {
   void onSelectMeal(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext _) => MealDetailScreen(),
+        builder: (BuildContext _) => MealDetailScreen(this.meal),
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/widgets/category-item.dart';
+import '../data/dummy-data.dart';
 
 class CategoriesPage extends StatelessWidget {
   @override
@@ -8,8 +10,20 @@ class CategoriesPage extends StatelessWidget {
         title: Text('Categories'),
       ),
       body: Container(
-        child: Column(
-          children: <Widget>[Text('Meals App')],
+        padding: EdgeInsets.all(6),
+        child: GridView(
+          children: DUMMY_CATEGORIES
+              .map((category) => CategoryItem(
+                    color: category.color,
+                    title: category.title,
+                  ))
+              .toList(),
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.6,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+          ),
         ),
       ),
     );

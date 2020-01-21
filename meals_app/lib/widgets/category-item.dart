@@ -6,8 +6,10 @@ class CategoryItem extends StatelessWidget {
   final List<String> favoritedMealsIds;
   final Function onToggleFavorite;
   final Category category;
+  final Map<String, bool> settings;
 
-  CategoryItem(this.category, this.favoritedMealsIds, this.onToggleFavorite);
+  CategoryItem(this.category, this.favoritedMealsIds, this.onToggleFavorite,
+      this.settings);
 
   void onTapCategory(BuildContext context) {
     Navigator.of(context).push(
@@ -17,6 +19,7 @@ class CategoryItem extends StatelessWidget {
             this.category,
             this.favoritedMealsIds,
             this.onToggleFavorite,
+            this.settings,
           );
         },
       ),

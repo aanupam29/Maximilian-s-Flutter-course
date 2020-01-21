@@ -6,8 +6,14 @@ class TabsScreen extends StatefulWidget {
   List<String> favoritedMealsIds;
   final Function onToggleFavorite;
   final Function onChangeTitle;
+  final Map<String, bool> settings;
 
-  TabsScreen(this.favoritedMealsIds, this.onToggleFavorite, this.onChangeTitle);
+  TabsScreen(
+    this.favoritedMealsIds,
+    this.onToggleFavorite,
+    this.onChangeTitle,
+    this.settings,
+  );
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -46,9 +52,14 @@ class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
             controller: this._tabController,
             children: <Widget>[
               CategoriesScreen(
-                  this.widget.favoritedMealsIds, this.widget.onToggleFavorite),
+                this.widget.favoritedMealsIds,
+                this.widget.onToggleFavorite,
+                this.widget.settings,
+              ),
               FavoritesScreen(
-                  this.widget.favoritedMealsIds, this.widget.onToggleFavorite)
+                this.widget.favoritedMealsIds,
+                this.widget.onToggleFavorite,
+              )
             ],
           ),
         ),

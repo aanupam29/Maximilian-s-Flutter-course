@@ -5,8 +5,10 @@ import '../data/dummy-data.dart';
 class CategoriesScreen extends StatelessWidget {
   final List<String> favoritedMealsIds;
   final Function onToggleFavorite;
+  final Map<String, bool> settings;
 
-  CategoriesScreen(this.favoritedMealsIds, this.onToggleFavorite);
+  CategoriesScreen(
+      this.favoritedMealsIds, this.onToggleFavorite, this.settings);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class CategoriesScreen extends StatelessWidget {
                 category,
                 this.favoritedMealsIds,
                 this.onToggleFavorite,
+                this.settings,
               ))
           .toList(),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

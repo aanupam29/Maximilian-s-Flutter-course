@@ -8,6 +8,13 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  Map<String, bool> settings = {
+    'isGlutenFree': false,
+    'isLactoseFree': false,
+    'isVegan': false,
+    'isVegetarian': false,
+  };
+
   List<String> favoritedMealsIds = [];
   String title = 'Categories';
   Widget selectedScreen;
@@ -22,6 +29,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
     });
   }
 
+  void onChageSettings(settingName) {}
+
   void onChangeTitle(String title) {
     setState(() {
       this.title = title;
@@ -34,6 +43,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       this.favoritedMealsIds,
       this.onToggleFavorite,
       this.onChangeTitle,
+      this.settings,
     );
   }
 
@@ -77,6 +87,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   this.favoritedMealsIds,
                   this.onToggleFavorite,
                   this.onChangeTitle,
+                  this.settings,
                 ));
                 this.onChangeTitle('Categories');
                 Navigator.of(context).pop();
@@ -90,7 +101,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
               selected: this.selectedScreen is SettingsScreen,
               onTap: () {
-                this.onChangeSelectedScreen(SettingsScreen());
+                this.onChangeSelectedScreen(SettingsScreen(
+                  this.settings,
+                ));
                 this.onChangeTitle('Settings');
                 Navigator.of(context).pop();
               },

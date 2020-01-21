@@ -8,15 +8,21 @@ class CategoryMealsScreen extends StatefulWidget {
   final Category category;
   final Function onToggleFavorite;
   final List<String> favoritedMealsIds;
+  final Map<String, bool> settings;
   List<Meal> meals;
 
   CategoryMealsScreen(
     this.category,
     this.favoritedMealsIds,
     this.onToggleFavorite,
+    this.settings,
   ) {
     this.meals = DUMMY_MEALS.where((Meal meal) {
-      return meal.categoriesIds.contains(this.category.id);
+      return meal.categoriesIds.contains(this.category.id) &&
+          (this.settings['isLactoseFree'] ? meal.isLactoseFree : true) &&
+          (this.settings['isGlutenFree'] ? meal.isGlutenFree : true) &&
+          (this.settings['isVegan'] ? meal.isVegan : true) &&
+          (this.settings['isVegetarian'] ? meal.isVegetarian : true);
     }).toList();
   }
 

@@ -3,6 +3,11 @@ import 'package:meals_app/screens/categories-screen.dart';
 import 'package:meals_app/screens/favorites-screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  List<String> favoritedMealsIds;
+  final Function onToggleFavorite;
+
+  TabsScreen(this.favoritedMealsIds, this.onToggleFavorite);
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -10,19 +15,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
   final List<String> screensTitles = ['Categories', 'Favorites'];
   int selectedScreenIndex = 0;
-  List<String> favoritedMealsIds = [];
-
   TabController _tabController;
-
-  void onToggleFavorite(String id) {
-    setState(() {
-      if (this.favoritedMealsIds.contains(id)) {
-        this.favoritedMealsIds.remove(id);
-      } else {
-        this.favoritedMealsIds.add(id);
-      }
-    });
-  }
 
   void _handleTabChange() {
     setState(() {
@@ -44,39 +37,36 @@ class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(this._getTitle()),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: TabBarView(
-              controller: this._tabController,
-              children: <Widget>[
-                CategoriesScreen(this.favoritedMealsIds, this.onToggleFavorite),
-                FavoritesScreen(this.favoritedMealsIds, this.onToggleFavorite)
-              ],
-            ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TabBarView(
+            controller: this._tabController,
+            children: <Widget>[
+              CategoriesScreen(
+                  this.widget.favoritedMealsIds, this.widget.onToggleFavorite),
+              FavoritesScreen(
+                  this.widget.favoritedMealsIds, this.widget.onToggleFavorite)
+            ],
           ),
-          Container(
-            color: Theme.of(context).primaryColor,
-            child: TabBar(
-              controller: _tabController,
-              tabs: <Widget>[
-                Tab(
-                  text: 'Categories',
-                  icon: Icon(Icons.category),
-                ),
-                Tab(
-                  text: 'Favorites',
-                  icon: Icon(Icons.star),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+        Container(
+          color: Theme.of(context).primaryColor,
+          child: TabBar(
+            controller: _tabController,
+            tabs: <Widget>[
+              Tab(
+                text: 'Categories',
+                icon: Icon(Icons.category),
+              ),
+              Tab(
+                text: 'Favorites',
+                icon: Icon(Icons.star),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

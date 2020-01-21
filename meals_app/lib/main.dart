@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/drawer-screen.dart';
 import 'package:meals_app/screens/tabs-screen.dart';
 
 void main() => runApp(MealsApp());
@@ -26,7 +27,7 @@ class MealsApp extends StatelessWidget {
               ),
             ),
       ),
-      home: TabsScreen(),
+      home: DrawerScreen(),
       title: 'Meals App',
     );
   }

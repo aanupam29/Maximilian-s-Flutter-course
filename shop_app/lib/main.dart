@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/ProductDetailScreen.dart';
 import 'package:shop_app/screens/ProductsOverviewScreen.dart';
 
 void main() => runApp(ShopApp());
@@ -13,6 +14,9 @@ class ShopApp extends StatelessWidget {
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato'),
       home: ProductsOverviewScreen(),
+      routes: {
+        ProductDetailScreen.routePath: (BuildContext _) => ProductDetailScreen()
+      },
     );
   }
 }

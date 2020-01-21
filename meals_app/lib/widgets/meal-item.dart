@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/Meal.dart';
 import 'package:meals_app/screens/meal-detail-screen.dart';
 
-class MealItem extends StatelessWidget {
+class MealItem extends StatefulWidget {
   final Meal meal;
+  final Function onToggleFavorite;
+  bool isFavorited;
 
-  MealItem(this.meal);
+  MealItem(this.meal, this.isFavorited, this.onToggleFavorite);
 
+  @override
+  _MealItemState createState() => _MealItemState();
+}
+
+class _MealItemState extends State<MealItem> {
   void onSelectMeal(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext _) => MealDetailScreen(this.meal),
+        builder: (BuildContext _) => MealDetailScreen(
+          this.widget.meal,
+          this.widget.isFavorited,
+          this.widget.onToggleFavorite,
+        ),
       ),
     );
   }
@@ -35,7 +46,7 @@ class MealItem extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.network(
-                    this.meal.imageUrl,
+                    this.widget.meal.imageUrl,
                     height: 250,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -52,13 +63,31 @@ class MealItem extends StatelessWidget {
                     ),
                     width: 240,
                     child: Text(
-                      this.meal.title,
+                      this.widget.meal.title,
                       style: TextStyle(
                         fontSize: 22,
                         color: Colors.white,
                       ),
                       softWrap: true,
                       overflow: TextOverflow.fade,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  right: 20,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        this.widget.onToggleFavorite(this.widget.meal.id);
+                        this.widget.isFavorited = !this.widget.isFavorited;
+                      });
+                    },
+                    icon: Icon(
+                      this.widget.isFavorited ? Icons.star : Icons.star_border,
+                      size: 40,
+                      color:
+                          this.widget.isFavorited ? Colors.yellow : Colors.grey,
                     ),
                   ),
                 )
@@ -75,7 +104,7 @@ class MealItem extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(this.meal.duration.toString() + 'min'),
+                      Text(this.widget.meal.duration.toString() + 'min'),
                     ],
                   ),
                   Row(
@@ -84,7 +113,7 @@ class MealItem extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(this.meal.complexityText),
+                      Text(this.widget.meal.complexityText),
                     ],
                   ),
                   Row(
@@ -93,7 +122,7 @@ class MealItem extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(this.meal.affordabilityText),
+                      Text(this.widget.meal.affordabilityText),
                     ],
                   ),
                 ],

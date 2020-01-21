@@ -3,15 +3,21 @@ import 'package:meals_app/models/Category.dart';
 import 'package:meals_app/screens/category-meals-screen.dart';
 
 class CategoryItem extends StatelessWidget {
+  final List<String> favoritedMealsIds;
+  final Function onToggleFavorite;
   final Category category;
 
-  CategoryItem(this.category);
+  CategoryItem(this.category, this.favoritedMealsIds, this.onToggleFavorite);
 
   void onTapCategory(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext navigatorContext) {
-          return CategoryMealsScreen(this.category);
+          return CategoryMealsScreen(
+            this.category,
+            this.favoritedMealsIds,
+            this.onToggleFavorite,
+          );
         },
       ),
     );

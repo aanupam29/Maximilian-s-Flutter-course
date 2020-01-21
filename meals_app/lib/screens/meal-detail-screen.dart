@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/Meal.dart';
 
-class MealDetailScreen extends StatelessWidget {
+class MealDetailScreen extends StatefulWidget {
   final Meal meal;
+  final Function onToggleFavorite;
+  bool isFavorited;
 
-  MealDetailScreen(this.meal);
+  MealDetailScreen(this.meal, this.isFavorited, this.onToggleFavorite);
 
+  @override
+  _MealDetailScreenState createState() => _MealDetailScreenState();
+}
+
+class _MealDetailScreenState extends State<MealDetailScreen> {
   Widget _buildContainter(Widget child) {
     return Container(
         padding: EdgeInsets.all(10),
@@ -37,11 +44,11 @@ class MealDetailScreen extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(this.meal.ingredients[index]),
+                  child: Text(this.widget.meal.ingredients[index]),
                 ),
               );
             },
-            itemCount: this.meal.ingredients.length),
+            itemCount: this.widget.meal.ingredients.length),
       )
     ];
   }
@@ -66,7 +73,7 @@ class MealDetailScreen extends StatelessWidget {
                       leading: CircleAvatar(
                         child: Text("#${index + 1}"),
                       ),
-                      title: Text(this.meal.steps[index]),
+                      title: Text(this.widget.meal.steps[index]),
                     ),
                     Divider(
                       color: Colors.grey,
@@ -75,7 +82,7 @@ class MealDetailScreen extends StatelessWidget {
                 ),
               );
             },
-            itemCount: this.meal.steps.length),
+            itemCount: this.widget.meal.steps.length),
       )
     ];
   }
@@ -84,7 +91,7 @@ class MealDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.meal.title),
+        title: Text(this.widget.meal.title),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 20),
@@ -93,9 +100,35 @@ class MealDetailScreen extends StatelessWidget {
             Container(
               height: 300,
               width: double.infinity,
-              child: Image.network(
-                this.meal.imageUrl,
-                fit: BoxFit.cover,
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Image.network(
+                    this.widget.meal.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 20,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          this.widget.onToggleFavorite(this.widget.meal.id);
+                          this.widget.isFavorited = !this.widget.isFavorited;
+                        });
+                      },
+                      icon: Icon(
+                        this.widget.isFavorited
+                            ? Icons.star
+                            : Icons.star_border,
+                        size: 40,
+                        color: this.widget.isFavorited
+                            ? Colors.yellow
+                            : Colors.grey,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
             ...this._buildIngredients(context),

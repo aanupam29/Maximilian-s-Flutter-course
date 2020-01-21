@@ -47,6 +47,8 @@ class Meal {
         return 'Hard';
         break;
       default:
+        return '';
+        break;
     }
   }
 
@@ -62,6 +64,8 @@ class Meal {
         return 'Luxurious';
         break;
       default:
+        return '';
+        break;
     }
   }
 }

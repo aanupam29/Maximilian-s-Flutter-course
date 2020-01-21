@@ -10,8 +10,19 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
   final List<String> screensTitles = ['Categories', 'Favorites'];
   int selectedScreenIndex = 0;
+  List<String> favoritedMealsIds = [];
 
   TabController _tabController;
+
+  void onToggleFavorite(String id) {
+    setState(() {
+      if (this.favoritedMealsIds.contains(id)) {
+        this.favoritedMealsIds.remove(id);
+      } else {
+        this.favoritedMealsIds.add(id);
+      }
+    });
+  }
 
   void _handleTabChange() {
     setState(() {
@@ -42,7 +53,10 @@ class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
           Expanded(
             child: TabBarView(
               controller: this._tabController,
-              children: <Widget>[CategoriesScreen(), FavoritesScreen()],
+              children: <Widget>[
+                CategoriesScreen(this.favoritedMealsIds, this.onToggleFavorite),
+                FavoritesScreen(this.favoritedMealsIds, this.onToggleFavorite)
+              ],
             ),
           ),
           Container(
@@ -51,9 +65,11 @@ class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
+                  text: 'Categories',
                   icon: Icon(Icons.category),
                 ),
                 Tab(
+                  text: 'Favorites',
                   icon: Icon(Icons.star),
                 ),
               ],

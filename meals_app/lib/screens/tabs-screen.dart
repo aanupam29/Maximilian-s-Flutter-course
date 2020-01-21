@@ -5,8 +5,9 @@ import 'package:meals_app/screens/favorites-screen.dart';
 class TabsScreen extends StatefulWidget {
   List<String> favoritedMealsIds;
   final Function onToggleFavorite;
+  final Function onChangeTitle;
 
-  TabsScreen(this.favoritedMealsIds, this.onToggleFavorite);
+  TabsScreen(this.favoritedMealsIds, this.onToggleFavorite, this.onChangeTitle);
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -20,6 +21,7 @@ class _TabsScreenState extends State<TabsScreen> with TickerProviderStateMixin {
   void _handleTabChange() {
     setState(() {
       this.selectedScreenIndex = _tabController.index;
+      this.widget.onChangeTitle(this._getTitle());
     });
   }
 

@@ -22,10 +22,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
     });
   }
 
+  void onChangeTitle(String title) {
+    setState(() {
+      this.title = title;
+    });
+  }
+
   initState() {
     super.initState();
-    this.selectedScreen =
-        TabsScreen(this.favoritedMealsIds, this.onToggleFavorite);
+    this.selectedScreen = TabsScreen(
+      this.favoritedMealsIds,
+      this.onToggleFavorite,
+      this.onChangeTitle,
+    );
   }
 
   void onChangeSelectedScreen(Widget widget) {
@@ -62,10 +71,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Icons.home,
                 color: Theme.of(context).primaryColor,
               ),
-              selected: true,
+              selected: this.selectedScreen is TabsScreen,
               onTap: () {
-                this.onChangeSelectedScreen(
-                    TabsScreen(this.favoritedMealsIds, this.onToggleFavorite));
+                this.onChangeSelectedScreen(TabsScreen(
+                  this.favoritedMealsIds,
+                  this.onToggleFavorite,
+                  this.onChangeTitle,
+                ));
+                this.onChangeTitle('Categories');
                 Navigator.of(context).pop();
               },
               title: Text('Home'),
@@ -75,9 +88,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Icons.settings,
                 color: Theme.of(context).primaryColor,
               ),
-              selected: true,
+              selected: this.selectedScreen is SettingsScreen,
               onTap: () {
                 this.onChangeSelectedScreen(SettingsScreen());
+                this.onChangeTitle('Settings');
                 Navigator.of(context).pop();
               },
               title: Text('Settings'),

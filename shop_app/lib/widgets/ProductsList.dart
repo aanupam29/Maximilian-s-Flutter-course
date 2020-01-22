@@ -17,8 +17,8 @@ class ProductsList extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       itemCount: this.products.length,
       itemBuilder: (BuildContext _, int index) {
-        return ChangeNotifierProvider(
-          create: (BuildContext _) => this.products[index],
+        return ChangeNotifierProvider.value(
+          value: this.products[index],
           child: ProductItem(),
         );
       },

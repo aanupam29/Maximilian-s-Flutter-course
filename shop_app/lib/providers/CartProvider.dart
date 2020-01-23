@@ -44,7 +44,7 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  String get cartCount {
-    return _items.keys.length.toString();
+  int get cartCount {
+    return _items.keys.length;
   }
 }

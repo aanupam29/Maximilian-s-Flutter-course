@@ -34,6 +34,16 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  double get total {
+    double total = 0;
+
+    this._items.forEach((String key, CartItem item) {
+      total += item.price * item.quantity;
+    });
+
+    return total;
+  }
+
   String get cartCount {
     return _items.keys.length.toString();
   }

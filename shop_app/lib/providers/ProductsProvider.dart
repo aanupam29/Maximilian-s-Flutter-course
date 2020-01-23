@@ -37,8 +37,14 @@ class ProductsProvider with ChangeNotifier {
     ),
   ];
 
+  bool _onlyFavorites = false;
+
   List<Product> get products {
     return [...this._products];
+  }
+
+  List<Product> get favorites {
+    return [...this._products.where((Product product) => product.isFavorite)];
   }
 
   addProduct(Product product) {

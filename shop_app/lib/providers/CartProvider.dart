@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shop_app/models/CartItem.dart';
 
 class CartProvider with ChangeNotifier {
-  Map<String, CartItem> _items;
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {...this._items};
@@ -30,5 +30,11 @@ class CartProvider with ChangeNotifier {
             ),
           );
     }
+    print(this._items);
+    notifyListeners();
+  }
+
+  String get cartCount {
+    return _items.keys.length.toString();
   }
 }

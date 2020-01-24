@@ -5,6 +5,7 @@ import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/screens/CartScreen.dart';
 import 'package:shop_app/screens/OrdersScreen.dart';
 import 'package:shop_app/screens/ProductsOverviewScreen.dart';
+import 'package:shop_app/screens/UserProductsScreen.dart';
 import 'package:shop_app/widgets/badge.dart';
 
 enum FilterOptions { Favorites, All }
@@ -18,7 +19,9 @@ class _MainDrawerState extends State<MainDrawer> {
   Widget selectedScreen = ProductsOverviewScreen();
 
   String getTitle() {
-    return selectedScreen is ProductsOverviewScreen ? 'Shop' : 'Orders';
+    return selectedScreen is ProductsOverviewScreen
+        ? 'Shop'
+        : selectedScreen is UserProductsScreen ? 'My Products' : 'Orders';
   }
 
   void onChangeScreen(Widget screen) {
@@ -68,7 +71,16 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             )
           ]
-        : [];
+        : this.selectedScreen is UserProductsScreen
+            ? [
+                IconButton(
+                  icon: Icon(Icons.add_circle),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartScreen.routePath);
+                  },
+                )
+              ]
+            : [];
   }
 
   @override
@@ -119,6 +131,18 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.of(context).pop();
               },
               title: Text('Orders'),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.apps,
+                color: Theme.of(context).primaryColor,
+              ),
+              selected: this.selectedScreen is UserProductsScreen,
+              onTap: () {
+                this.onChangeScreen(UserProductsScreen());
+                Navigator.of(context).pop();
+              },
+              title: Text('My Products'),
             ),
           ],
         ),

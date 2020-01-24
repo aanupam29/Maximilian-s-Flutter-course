@@ -48,6 +48,10 @@ class ProductsProvider with ChangeNotifier {
     return this._onlyFavorites ? this.favorites : [...this._products];
   }
 
+  List<Product> get allProducts {
+    return [...this._products];
+  }
+
   List<Product> get favorites {
     return [...this._products.where((Product product) => product.isFavorite)];
   }

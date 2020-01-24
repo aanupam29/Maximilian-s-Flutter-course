@@ -15,7 +15,7 @@ class CartProvider with ChangeNotifier {
             (existing) => CartItem(
               id: existing.id,
               productTitle: existing.productTitle,
-              quantity: existing.quantity,
+              quantity: existing.quantity + 1,
               price: existing.price,
             ),
           );
@@ -46,5 +46,10 @@ class CartProvider with ChangeNotifier {
 
   int get cartCount {
     return _items.keys.length;
+  }
+
+  void removeItem(String id) {
+    this._items.remove(id);
+    notifyListeners();
   }
 }

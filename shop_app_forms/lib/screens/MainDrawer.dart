@@ -4,6 +4,7 @@ import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/screens/CartScreen.dart';
 import 'package:shop_app/screens/OrdersScreen.dart';
+import 'package:shop_app/screens/ProductFormScreen.dart';
 import 'package:shop_app/screens/ProductsOverviewScreen.dart';
 import 'package:shop_app/screens/UserProductsScreen.dart';
 import 'package:shop_app/widgets/badge.dart';
@@ -76,7 +77,8 @@ class _MainDrawerState extends State<MainDrawer> {
                 IconButton(
                   icon: Icon(Icons.add_circle),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(CartScreen.routePath);
+                    Navigator.of(context)
+                        .pushNamed(ProductFormScreen.routePath);
                   },
                 )
               ]

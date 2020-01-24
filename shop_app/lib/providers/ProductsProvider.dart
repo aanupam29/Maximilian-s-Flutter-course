@@ -39,8 +39,13 @@ class ProductsProvider with ChangeNotifier {
 
   bool _onlyFavorites = false;
 
+  void setOnlyFavorites(bool onlyFavorites) {
+    this._onlyFavorites = onlyFavorites;
+    notifyListeners();
+  }
+
   List<Product> get products {
-    return [...this._products];
+    return this._onlyFavorites ? this.favorites : [...this._products];
   }
 
   List<Product> get favorites {

@@ -30,7 +30,6 @@ class CartProvider with ChangeNotifier {
             ),
           );
     }
-    print(this._items);
     notifyListeners();
   }
 

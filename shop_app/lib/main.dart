@@ -4,8 +4,8 @@ import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/OrdersProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/screens/CartScreen.dart';
+import 'package:shop_app/screens/MainDrawer.dart';
 import 'package:shop_app/screens/ProductDetailScreen.dart';
-import 'package:shop_app/screens/ProductsOverviewScreen.dart';
 
 void main() => runApp(ShopApp());
 
@@ -30,7 +30,7 @@ class ShopApp extends StatelessWidget {
             primaryColor: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato'),
-        home: ProductsOverviewScreen(),
+        home: MainDrawer(),
         routes: {
           ProductDetailScreen.routePath: (BuildContext _) =>
               ProductDetailScreen(),

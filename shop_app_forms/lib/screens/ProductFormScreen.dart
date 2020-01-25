@@ -10,17 +10,35 @@ class ProductFormScreen extends StatefulWidget {
 class _ProductFormScreenState extends State<ProductFormScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _imageUrlFocusNode = FocusNode();
+
+  final _imageUrlController = TextEditingController();
+
+  @override
+  void initState() {
+    _imageUrlController.addListener(onChangedFocus);
+    super.initState();
+  }
+
+  void onChangedFocus() {
+    if (!_imageUrlFocusNode.hasFocus) {
+      setState(() {});
+    }
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
+    _imageUrlFocusNode.dispose();
+    _imageUrlController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_imageUrlController.text);
     return Scaffold(
       appBar: AppBar(
         title: Text('Product Form'),
@@ -49,8 +67,40 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Description'),
                 focusNode: _descriptionFocusNode,
+                keyboardType: TextInputType.multiline,
                 maxLines: 5,
               ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 8, right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                    ),
+                    child: _imageUrlController.text.isEmpty
+                        ? Center(
+                            child: Text('Enter a URL'),
+                          )
+                        : FittedBox(
+                            child: Image.network(
+                              _imageUrlController.text,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Image Url'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageUrlController,
+                      focusNode: _imageUrlFocusNode,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

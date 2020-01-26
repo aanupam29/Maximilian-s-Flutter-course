@@ -59,10 +59,10 @@ class ProductsProvider with ChangeNotifier {
     return [...this._products.where((Product product) => product.isFavorite)];
   }
 
-  addProduct(Product newProduct) {
+  Future<void> addProduct(Product newProduct) {
     const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
 
-    http
+    return http
         .post(
       url,
       body: json.encode({

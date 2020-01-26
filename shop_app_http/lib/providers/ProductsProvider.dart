@@ -59,21 +59,21 @@ class ProductsProvider with ChangeNotifier {
     return [...this._products.where((Product product) => product.isFavorite)];
   }
 
-  Future<void> addProduct(Product newProduct) {
+  Future<void> addProduct(Product newProduct) async {
     const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
 
-    return http
-        .post(
-      url,
-      body: json.encode({
-        'title': newProduct.title,
-        'description': newProduct.description,
-        'price': newProduct.price,
-        'imageUrl': newProduct.imageUrl,
-        'isFavorite': newProduct.isFavorite
-      }),
-    )
-        .then((http.Response response) {
+    try {
+      http.Response response = await http.post(
+        url,
+        body: json.encode({
+          'title': newProduct.title,
+          'description': newProduct.description,
+          'price': newProduct.price,
+          'imageUrl': newProduct.imageUrl,
+          'isFavorite': newProduct.isFavorite
+        }),
+      );
+
       String firebaseId = json.decode(response.body)['name'];
 
       Product product = Product(
@@ -87,10 +87,10 @@ class ProductsProvider with ChangeNotifier {
 
       this._products.add(product);
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw (error);
-    });
+    }
   }
 
   void updateProduct(String id, Product updatedProduct) {

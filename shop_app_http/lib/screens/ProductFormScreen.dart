@@ -56,7 +56,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     super.dispose();
   }
 
-  void _saveForm() {
+  void _saveForm() async {
     final bool isValid = _form.currentState.validate();
     if (isValid) {
       _form.currentState.save();
@@ -71,12 +71,13 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       if (product.id != null) {
         provider.updateProduct(this.product.id, this.product);
       } else {
-        provider.addProduct(product).then((void _) {
+        try {
+          await provider.addProduct(product);
           setState(() {
             _isLoading = false;
           });
           Navigator.of(context).pop();
-        }).catchError((error) {
+        } catch (e) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -103,7 +104,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
               );
             },
           );
-        });
+        }
       }
     }
   }

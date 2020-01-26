@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shop_app/providers/Product.dart';
 
 class ProductsProvider with ChangeNotifier {
@@ -57,13 +60,27 @@ class ProductsProvider with ChangeNotifier {
   }
 
   addProduct(Product newProduct) {
+    const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
+
     Product product = Product(
-        imageUrl: newProduct.imageUrl,
-        description: newProduct.description,
-        price: newProduct.price,
-        title: newProduct.title,
-        isFavorite: false,
-        id: DateTime.now().toString());
+      imageUrl: newProduct.imageUrl,
+      description: newProduct.description,
+      price: newProduct.price,
+      title: newProduct.title,
+      isFavorite: false,
+      id: DateTime.now().toString(),
+    );
+
+    http.post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'price': product.price,
+        'imageUrl': product.imageUrl,
+        'isFavorite': product.isFavorite
+      }),
+    );
 
     this._products.add(product);
     notifyListeners();

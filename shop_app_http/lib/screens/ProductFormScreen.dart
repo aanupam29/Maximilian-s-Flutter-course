@@ -29,7 +29,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     'title': '',
     'description': '',
     'imageUrl': '',
-    'price': '0'
+    'price': ''
   };
 
   @override
@@ -209,7 +209,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   Expanded(
                     child: TextFormField(
                       validator: (String value) {
-                        return !value.isNotEmpty && value.startsWith('http')
+                        return value.isNotEmpty && value.startsWith('http')
                             ? null
                             : 'You must enter a valid url!';
                       },

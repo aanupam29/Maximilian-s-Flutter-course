@@ -209,7 +209,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   Expanded(
                     child: TextFormField(
                       validator: (String value) {
-                        return !value.isEmpty && value.startsWith('http')
+                        return !value.isNotEmpty && value.startsWith('http')
                             ? null
                             : 'You must enter a valid url!';
                       },

@@ -87,6 +87,9 @@ class ProductsProvider with ChangeNotifier {
 
       this._products.add(product);
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw (error);
     });
   }
 

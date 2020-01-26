@@ -11,6 +11,7 @@ class ProductFormScreen extends StatefulWidget {
 }
 
 class _ProductFormScreenState extends State<ProductFormScreen> {
+  final _titleFocusNode = FocusNode();
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlFocusNode = FocusNode();
@@ -47,6 +48,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
   @override
   void dispose() {
+    _titleFocusNode.dispose();
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageUrlFocusNode.dispose();
@@ -74,6 +76,33 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
             _isLoading = false;
           });
           Navigator.of(context).pop();
+        }).catchError((error) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('An error ocurred'),
+                content: Text('Something went wrong!'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Ok!'),
+                    onPressed: () {
+                      this._titleFocusNode.unfocus();
+                      this._descriptionFocusNode.unfocus();
+                      this._priceFocusNode.unfocus();
+                      this._imageUrlFocusNode.unfocus();
+                      this._imageUrlController.text = '';
+
+                      setState(() {
+                        this._isLoading = false;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            },
+          );
         });
       }
     }
@@ -129,6 +158,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
+                      focusNode: _titleFocusNode,
                       initialValue: this._initValues['title'],
                       validator: (String value) {
                         return value.length > 4

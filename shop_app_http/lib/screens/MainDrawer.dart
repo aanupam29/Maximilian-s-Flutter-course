@@ -18,6 +18,8 @@ class MainDrawer extends StatefulWidget {
 
 class _MainDrawerState extends State<MainDrawer> {
   Widget selectedScreen = ProductsOverviewScreen();
+  bool _isInit = true;
+  bool _isLoading = false;
 
   String getTitle() {
     return selectedScreen is ProductsOverviewScreen
@@ -29,6 +31,25 @@ class _MainDrawerState extends State<MainDrawer> {
     setState(() {
       this.selectedScreen = screen;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (this._isInit) {
+      this._isLoading = true;
+
+      ProductsProvider productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      productsProvider.fetchProducts().then((_) {
+        setState(() {
+          this._isLoading = false;
+        });
+      });
+    }
+
+    this._isInit = false;
+
+    super.didChangeDependencies();
   }
 
   List<Widget> getActions() {
@@ -92,7 +113,11 @@ class _MainDrawerState extends State<MainDrawer> {
         title: Text(this.getTitle()),
         actions: this.getActions(),
       ),
-      body: this.selectedScreen,
+      body: this._isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : this.selectedScreen,
       drawer: Drawer(
         child: Column(
           children: <Widget>[

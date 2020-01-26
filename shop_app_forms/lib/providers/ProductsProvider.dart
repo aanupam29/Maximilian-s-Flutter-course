@@ -56,7 +56,15 @@ class ProductsProvider with ChangeNotifier {
     return [...this._products.where((Product product) => product.isFavorite)];
   }
 
-  addProduct(Product product) {
+  addProduct(Product newProduct) {
+    Product product = Product(
+        imageUrl: newProduct.imageUrl,
+        description: newProduct.description,
+        price: newProduct.price,
+        title: newProduct.title,
+        isFavorite: false,
+        id: DateTime.now().toString());
+
     this._products.add(product);
     notifyListeners();
   }

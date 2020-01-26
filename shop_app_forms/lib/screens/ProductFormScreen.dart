@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/providers/Product.dart';
+import 'package:shop_app/providers/ProductsProvider.dart';
 
 class ProductFormScreen extends StatefulWidget {
   static const routePath = 'product-form';
@@ -45,11 +47,13 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   }
 
   void _saveForm() {
-    _form.currentState.save();
-    print(product.price);
-    print(product.title);
-    print(product.description);
-    print(product.imageUrl);
+    final bool isValid = _form.currentState.validate();
+    if (isValid) {
+      _form.currentState.save();
+      ProductsProvider provider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      provider.addProduct(product);
+    }
   }
 
   @override
@@ -74,6 +78,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                validator: (String value) {
+                  return value.length > 4
+                      ? null
+                      : 'The title must have a least 5 characters!';
+                },
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (String _) {
@@ -90,6 +99,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                validator: (String value) {
+                  return value.length != 0 && double.tryParse(value) > 0
+                      ? null
+                      : 'You must enter a valid number!';
+                },
                 decoration: InputDecoration(labelText: 'Price'),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
@@ -108,6 +122,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                validator: (String value) {
+                  return value.length > 5
+                      ? null
+                      : 'You must add at least 5 characters of description!';
+                },
                 decoration: InputDecoration(labelText: 'Description'),
                 focusNode: _descriptionFocusNode,
                 keyboardType: TextInputType.multiline,
@@ -144,6 +163,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      validator: (String value) {
+                        return !value.isEmpty && value.startsWith('http')
+                            ? null
+                            : 'You must enter a valid url!';
+                      },
                       decoration: InputDecoration(labelText: 'Image Url'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,

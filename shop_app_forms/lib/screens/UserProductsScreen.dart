@@ -10,13 +10,13 @@ class UserProductsScreen extends StatelessWidget {
     ProductsProvider productsProvider = Provider.of<ProductsProvider>(context);
     List<Product> products = productsProvider.allProducts;
 
-    print(products);
     return Padding(
       padding: EdgeInsets.all(8),
       child: ListView.builder(
         itemCount: products.length,
         itemBuilder: (BuildContext _, int index) {
           return UserProductItem(
+            id: products[index].id,
             title: products[index].title,
             imageUrl: products[index].imageUrl,
           );

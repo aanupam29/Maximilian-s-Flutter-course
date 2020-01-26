@@ -24,6 +24,13 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     description: '',
     imageUrl: '',
   );
+  bool _isInit = true;
+  Map<String, String> _initValues = {
+    'title': '',
+    'description': '',
+    'imageUrl': '',
+    'price': '0'
+  };
 
   @override
   void initState() {
@@ -52,13 +59,45 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       _form.currentState.save();
       ProductsProvider provider =
           Provider.of<ProductsProvider>(context, listen: false);
-      provider.addProduct(product);
+
+      print(product.id);
+
+      if (product.id != null) {
+        provider.updateProduct(this.product.id, this.product);
+      } else {
+        provider.addProduct(product);
+      }
+      Navigator.of(context).pop();
     }
   }
 
   @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      String productId = ModalRoute.of(context).settings.arguments as String;
+      if (productId != null) {
+        ProductsProvider provider =
+            Provider.of<ProductsProvider>(context, listen: false);
+
+        Product product = provider.findById(productId);
+        this.product = product;
+        this._initValues = {
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price.toString()
+        };
+
+        this._imageUrlController.text = this._initValues['imageUrl'];
+      }
+    }
+    this._isInit = false;
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(_imageUrlController.text);
     return Scaffold(
       appBar: AppBar(
         title: Text('Product Form'),
@@ -78,6 +117,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: this._initValues['title'],
                 validator: (String value) {
                   return value.length > 4
                       ? null
@@ -90,7 +130,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
                 onSaved: (String value) {
                   this.product = Product(
-                    id: null,
+                    isFavorite: this.product.isFavorite,
+                    id: this.product.id,
                     title: value,
                     price: this.product.price,
                     description: this.product.description,
@@ -99,6 +140,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                initialValue: this._initValues['price'],
                 validator: (String value) {
                   return value.length != 0 && double.tryParse(value) > 0
                       ? null
@@ -113,7 +155,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
                 onSaved: (String value) {
                   this.product = Product(
-                    id: null,
+                    isFavorite: this.product.isFavorite,
+                    id: this.product.id,
                     title: this.product.title,
                     price: double.parse(value),
                     description: this.product.description,
@@ -122,6 +165,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                initialValue: this._initValues['description'],
                 validator: (String value) {
                   return value.length > 5
                       ? null
@@ -133,7 +177,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 maxLines: 5,
                 onSaved: (String value) {
                   this.product = Product(
-                    id: null,
+                    isFavorite: this.product.isFavorite,
+                    id: this.product.id,
                     title: this.product.title,
                     price: this.product.price,
                     description: value,
@@ -178,7 +223,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                       },
                       onSaved: (String value) {
                         this.product = Product(
-                          id: null,
+                          isFavorite: this.product.isFavorite,
+                          id: this.product.id,
                           title: this.product.title,
                           price: this.product.price,
                           description: this.product.description,

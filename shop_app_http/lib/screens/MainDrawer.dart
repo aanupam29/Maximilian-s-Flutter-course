@@ -52,6 +52,13 @@ class _MainDrawerState extends State<MainDrawer> {
     super.didChangeDependencies();
   }
 
+  Future<void> _refreshData() async {
+    if (selectedScreen is ProductsOverviewScreen) {
+      await Provider.of<ProductsProvider>(context, listen: false)
+          .fetchProducts();
+    }
+  }
+
   List<Widget> getActions() {
     ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
@@ -106,6 +113,15 @@ class _MainDrawerState extends State<MainDrawer> {
             : [];
   }
 
+  Widget refreshableScreen() {
+    return this.selectedScreen is ProductsOverviewScreen
+        ? RefreshIndicator(
+            child: this.selectedScreen,
+            onRefresh: this._refreshData,
+          )
+        : this.selectedScreen;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +133,7 @@ class _MainDrawerState extends State<MainDrawer> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : this.selectedScreen,
+          : this.refreshableScreen(),
       drawer: Drawer(
         child: Column(
           children: <Widget>[

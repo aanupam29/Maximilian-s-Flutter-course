@@ -62,28 +62,32 @@ class ProductsProvider with ChangeNotifier {
   addProduct(Product newProduct) {
     const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
 
-    Product product = Product(
-      imageUrl: newProduct.imageUrl,
-      description: newProduct.description,
-      price: newProduct.price,
-      title: newProduct.title,
-      isFavorite: false,
-      id: DateTime.now().toString(),
-    );
-
-    http.post(
+    http
+        .post(
       url,
       body: json.encode({
-        'title': product.title,
-        'description': product.description,
-        'price': product.price,
-        'imageUrl': product.imageUrl,
-        'isFavorite': product.isFavorite
+        'title': newProduct.title,
+        'description': newProduct.description,
+        'price': newProduct.price,
+        'imageUrl': newProduct.imageUrl,
+        'isFavorite': newProduct.isFavorite
       }),
-    );
+    )
+        .then((http.Response response) {
+      String firebaseId = json.decode(response.body)['name'];
 
-    this._products.add(product);
-    notifyListeners();
+      Product product = Product(
+        imageUrl: newProduct.imageUrl,
+        description: newProduct.description,
+        price: newProduct.price,
+        title: newProduct.title,
+        isFavorite: false,
+        id: firebaseId,
+      );
+
+      this._products.add(product);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product updatedProduct) {

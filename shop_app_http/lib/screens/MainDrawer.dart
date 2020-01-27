@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
+import 'package:shop_app/providers/OrdersProvider.dart';
 import 'package:shop_app/screens/CartScreen.dart';
 import 'package:shop_app/screens/OrdersScreen.dart';
 import 'package:shop_app/screens/ProductFormScreen.dart';
@@ -34,17 +35,29 @@ class _MainDrawerState extends State<MainDrawer> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (this._isInit) {
-      this._isLoading = true;
+      setState(() {
+        this._isLoading = true;
+      });
+      try {
+        // productsProvider.fetchProducts().then((_) {});
+        ProductsProvider productsProvider =
+            Provider.of<ProductsProvider>(context);
+        OrdersProvider ordersProvider = Provider.of<OrdersProvider>(context);
 
-      ProductsProvider productsProvider =
-          Provider.of<ProductsProvider>(context, listen: false);
-      productsProvider.fetchProducts().then((_) {
+        await productsProvider.fetchProducts();
+        await ordersProvider.fetchOrders();
+
         setState(() {
           this._isLoading = false;
         });
-      });
+      } catch (e) {
+        print(e);
+        setState(() {
+          this._isLoading = false;
+        });
+      }
     }
 
     this._isInit = false;
@@ -53,9 +66,14 @@ class _MainDrawerState extends State<MainDrawer> {
   }
 
   Future<void> _refreshData() async {
-    if (selectedScreen is ProductsOverviewScreen) {
+    if (selectedScreen is ProductsOverviewScreen ||
+        selectedScreen is UserProductsScreen) {
       await Provider.of<ProductsProvider>(context, listen: false)
           .fetchProducts();
+    }
+
+    if (selectedScreen is OrdersScreen) {
+      await Provider.of<OrdersProvider>(context, listen: false).fetchOrders();
     }
   }
 

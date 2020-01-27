@@ -32,13 +32,12 @@ class ShopApp extends StatelessWidget {
             primaryColor: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato'),
-        home: MainDrawer(),
+        home: AuthScreen(),
         routes: {
           ProductDetailScreen.routePath: (BuildContext _) =>
               ProductDetailScreen(),
           CartScreen.routePath: (BuildContext _) => CartScreen(),
           ProductFormScreen.routePath: (BuildContext _) => ProductFormScreen(),
-          AuthScreen.routePath: (BuildContext _) => AuthScreen(),
         },
       ),
     );

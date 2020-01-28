@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_app/models/HttpException.dart';
 
 class AuthProvider with ChangeNotifier {
   String _token;
@@ -20,8 +21,15 @@ class AuthProvider with ChangeNotifier {
             'returnSecureToken': true,
           }));
 
+      final responseData = json.decode(response.body);
+
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
       print(json.decode(response.body));
-    } catch (e) {}
+    } catch (e) {
+      throw (e);
+    }
   }
 
   Future<void> signIn(String email, String password) async {
@@ -36,7 +44,13 @@ class AuthProvider with ChangeNotifier {
             'returnSecureToken': true,
           }));
 
-      print(json.decode(response.body));
-    } catch (e) {}
+      final responseData = json.decode(response.body);
+
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
+    } catch (e) {
+      throw (e);
+    }
   }
 }

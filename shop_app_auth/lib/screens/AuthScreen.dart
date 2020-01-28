@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/models/HttpException.dart';
 import '../providers/AuthProvider.dart';
 
 enum AuthMode { Signup, Login }
@@ -111,25 +112,68 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      AuthProvider authProvider =
-          Provider.of<AuthProvider>(context, listen: false);
 
-      await authProvider.signIn(
-          this._authData['email'], this._authData['password']);
-    } else {
-      // Sign user up
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        AuthProvider authProvider =
+            Provider.of<AuthProvider>(context, listen: false);
 
-      AuthProvider authProvider =
-          Provider.of<AuthProvider>(context, listen: false);
+        await authProvider.signIn(
+            this._authData['email'], this._authData['password']);
+      } else {
+        // Sign user up
 
-      await authProvider.signUp(
-          this._authData['email'], this._authData['password']);
+        AuthProvider authProvider =
+            Provider.of<AuthProvider>(context, listen: false);
+
+        await authProvider.signUp(
+            this._authData['email'], this._authData['password']);
+      }
+    } on HttpException catch (e) {
+      String errorMessage = 'Authentication error.';
+
+      if (e.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use!';
+      } else if (e.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This email is not valid!';
+      } else if (e.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is to weak!';
+      } else if (e.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not found an user with this email!';
+      } else if (e.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password!';
+      }
+
+      this._showErrorDialog(errorMessage);
+    } catch (e) {
+      const String errorMessage =
+          'Could not authenticate you. Please try again later.';
+      this._showErrorDialog(errorMessage);
     }
+
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('An error ocurred'),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok!'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   void _switchAuthMode() {

@@ -9,6 +9,20 @@ class AuthProvider with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
 
+  bool get isAuthenticated {
+    return this.token != null;
+  }
+
+  String get token {
+    if (_expiryDate != null &&
+        _expiryDate.isAfter(DateTime.now()) &&
+        _token != null) {
+      return this._token;
+    }
+
+    return null;
+  }
+
   Future<void> signUp(String email, String password) async {
     try {
       const url =
@@ -49,7 +63,16 @@ class AuthProvider with ChangeNotifier {
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
+
+      this._token = responseData['idToken'];
+      this._userId = responseData['localId'];
+      this._expiryDate = DateTime.now().add(
+        Duration(seconds: int.parse(responseData['expiresIn'])),
+      );
+
+      notifyListeners();
     } catch (e) {
+      print(e);
       throw (e);
     }
   }

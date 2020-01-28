@@ -6,6 +6,7 @@ import 'package:shop_app/providers/OrdersProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/screens/AuthScreen.dart';
 import 'package:shop_app/screens/CartScreen.dart';
+import 'package:shop_app/screens/MainDrawer.dart';
 import 'package:shop_app/screens/ProductDetailScreen.dart';
 import 'package:shop_app/screens/ProductFormScreen.dart';
 
@@ -29,18 +30,24 @@ class ShopApp extends StatelessWidget {
           create: (BuildContext _) => AuthProvider(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Shop App',
-        theme: ThemeData(
-            primaryColor: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato'),
-        home: AuthScreen(),
-        routes: {
-          ProductDetailScreen.routePath: (BuildContext _) =>
-              ProductDetailScreen(),
-          CartScreen.routePath: (BuildContext _) => CartScreen(),
-          ProductFormScreen.routePath: (BuildContext _) => ProductFormScreen(),
+      child: Consumer<AuthProvider>(
+        builder: (BuildContext context, AuthProvider provider, Widget _) {
+          return MaterialApp(
+            title: 'Shop App',
+            theme: ThemeData(
+              primaryColor: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato',
+            ),
+            home: provider.isAuthenticated ? MainDrawer() : AuthScreen(),
+            routes: {
+              ProductDetailScreen.routePath: (BuildContext _) =>
+                  ProductDetailScreen(),
+              CartScreen.routePath: (BuildContext _) => CartScreen(),
+              ProductFormScreen.routePath: (BuildContext _) =>
+                  ProductFormScreen(),
+            },
+          );
         },
       ),
     );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/AuthProvider.dart';
 import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/OrdersProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/screens/AuthScreen.dart';
 import 'package:shop_app/screens/CartScreen.dart';
-import 'package:shop_app/screens/MainDrawer.dart';
 import 'package:shop_app/screens/ProductDetailScreen.dart';
 import 'package:shop_app/screens/ProductFormScreen.dart';
 
@@ -24,6 +24,9 @@ class ShopApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext _) => OrdersProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext _) => AuthProvider(),
         ),
       ],
       child: MaterialApp(

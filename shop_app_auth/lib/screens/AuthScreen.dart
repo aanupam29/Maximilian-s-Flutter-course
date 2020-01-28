@@ -113,6 +113,11 @@ class _AuthCardState extends State<AuthCard> {
     });
     if (_authMode == AuthMode.Login) {
       // Log user in
+      AuthProvider authProvider =
+          Provider.of<AuthProvider>(context, listen: false);
+
+      await authProvider.signIn(
+          this._authData['email'], this._authData['password']);
     } else {
       // Sign user up
 

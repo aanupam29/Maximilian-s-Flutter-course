@@ -26,14 +26,16 @@ class OrdersProvider with ChangeNotifier {
   }
 
   String token;
+  String userId;
 
-  OrdersProvider({this.token = null, this.providerOrders = const []});
+  OrdersProvider(
+      {this.token = null, this.userId, this.providerOrders = const []});
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     try {
       final DateTime datetime = DateTime.now();
       final url =
-          'https://flutter-course-69a71.firebaseio.com/orders.json?auth=$token';
+          'https://flutter-course-69a71.firebaseio.com/orders/$userId.json?auth=$token';
       await http.post(url,
           body: json.encode({
             'amount': total,
@@ -68,7 +70,7 @@ class OrdersProvider with ChangeNotifier {
 
   Future<void> fetchOrders() async {
     final url =
-        'https://flutter-course-69a71.firebaseio.com/orders.json?auth=$token';
+        'https://flutter-course-69a71.firebaseio.com/orders/$userId.json?auth=$token';
 
     try {
       final http.Response response = await http.get(url);

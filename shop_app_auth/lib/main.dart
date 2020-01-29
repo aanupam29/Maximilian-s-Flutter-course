@@ -39,6 +39,7 @@ class ShopApp extends StatelessWidget {
                   OrdersProvider ordersProvider) =>
               OrdersProvider(
             token: authProvider.token,
+            userId: authProvider.userId,
             providerOrders: ordersProvider.orders,
           ),
           create: (BuildContext _) => OrdersProvider(),

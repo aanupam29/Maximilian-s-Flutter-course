@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop_app/models/HttpException.dart';
@@ -29,11 +30,13 @@ class AuthProvider with ChangeNotifier {
     return this.token != null ? this._userId : null;
   }
 
-  void logout() {
+  Future<void> logout() async {
     this._token = null;
     this._expiryDate = null;
     this._userId = null;
     _cancelAuthTimer();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
     notifyListeners();
   }
 
@@ -85,6 +88,7 @@ class AuthProvider with ChangeNotifier {
       );
       this._setAuthLogoutTimer();
       notifyListeners();
+      this.setSharedPreferences(this._token, this._userId, this._expiryDate);
     } catch (e) {
       print(e);
       throw (e);
@@ -94,6 +98,43 @@ class AuthProvider with ChangeNotifier {
   void _cancelAuthTimer() {
     if (authTimer != null) {
       authTimer.cancel();
+    }
+  }
+
+  Future<void> setSharedPreferences(
+      String token, String userId, DateTime expiryDate) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+
+    final userData = json.encode({
+      'token': token,
+      'userId': userId,
+      'expiryDate': expiryDate.toIso8601String()
+    });
+
+    sharedPreferences.setString('userData', userData);
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    if (!sharedPreferences.containsKey('userData')) {
+      return false;
+    } else {
+      Map<String, dynamic> extractedUserData =
+          json.decode(sharedPreferences.getString('userData'));
+      final DateTime expiryDate =
+          DateTime.parse(extractedUserData['expiryDate']);
+
+      if (expiryDate.isAfter(DateTime.now())) {
+        this._token = extractedUserData['token'];
+        this._userId = extractedUserData['userId'];
+        this._expiryDate = expiryDate;
+        this._setAuthLogoutTimer();
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 

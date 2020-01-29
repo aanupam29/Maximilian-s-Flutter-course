@@ -40,28 +40,40 @@ class ProductsProvider with ChangeNotifier {
     // ),
   ];
 
+  String authToken;
+
+  ProductsProvider({this.authToken = null});
+
+  void setToken(String token) {
+    this.authToken = token;
+  }
+
   Future<void> fetchProducts() async {
-    const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
-    try {
-      final http.Response response = await http.get(url);
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      List<Product> loadedProducts = [];
+    if (this.authToken != null) {
+      final url =
+          'https://flutter-course-69a71.firebaseio.com/products.json?auth=$authToken';
+      try {
+        final http.Response response = await http.get(url);
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        List<Product> loadedProducts = [];
 
-      responseData.forEach((String key, dynamic value) {
-        loadedProducts.add(Product(
-          id: key,
-          description: value['description'],
-          imageUrl: value['imageUrl'],
-          price: value['price'],
-          title: value['title'],
-          isFavorite: value['isFavorite'],
-        ));
-      });
+        responseData.forEach((String key, dynamic value) {
+          loadedProducts.add(Product(
+            id: key,
+            description: value['description'],
+            imageUrl: value['imageUrl'],
+            price: value['price'],
+            title: value['title'],
+            isFavorite: value['isFavorite'],
+          ));
+        });
 
-      this._products = loadedProducts;
-      notifyListeners();
-    } catch (e) {
-      throw (e);
+        this._products = loadedProducts;
+        notifyListeners();
+      } catch (e) {
+        print(e);
+        throw (e);
+      }
     }
   }
 

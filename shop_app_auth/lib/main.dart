@@ -18,6 +18,12 @@ class ShopApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (BuildContext _) => AuthProvider(),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, ProductsProvider>(
+          update: (BuildContext _, AuthProvider authProvider,
+                  ProductsProvider productsProvider) =>
+              ProductsProvider(authToken: authProvider.token),
           create: (BuildContext _) => ProductsProvider(),
         ),
         ChangeNotifierProvider(
@@ -25,9 +31,6 @@ class ShopApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext _) => OrdersProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext _) => AuthProvider(),
         ),
       ],
       child: Consumer<AuthProvider>(

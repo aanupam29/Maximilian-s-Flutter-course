@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ class AuthProvider with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
+  Timer authTimer;
 
   bool get isAuthenticated {
     return this.token != null;
@@ -31,6 +33,7 @@ class AuthProvider with ChangeNotifier {
     this._token = null;
     this._expiryDate = null;
     this._userId = null;
+    _cancelAuthTimer();
     notifyListeners();
   }
 
@@ -80,11 +83,27 @@ class AuthProvider with ChangeNotifier {
       this._expiryDate = DateTime.now().add(
         Duration(seconds: int.parse(responseData['expiresIn'])),
       );
-
+      this._setAuthLogoutTimer();
       notifyListeners();
     } catch (e) {
       print(e);
       throw (e);
     }
+  }
+
+  void _cancelAuthTimer() {
+    if (authTimer != null) {
+      authTimer.cancel();
+    }
+  }
+
+  void _setAuthLogoutTimer() {
+    final int timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
+
+    _cancelAuthTimer();
+
+    this.authTimer = Timer(Duration(seconds: timeToExpiry), () {
+      this.logout();
+    });
   }
 }

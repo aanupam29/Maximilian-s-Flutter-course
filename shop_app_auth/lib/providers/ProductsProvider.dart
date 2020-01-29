@@ -5,44 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:shop_app/providers/Product.dart';
 
 class ProductsProvider with ChangeNotifier {
-  List<Product> _products = [
-    // Product(
-    //   id: 'p1',
-    //   title: 'Red Shirt',
-    //   description: 'A red shirt - it is pretty red!',
-    //   price: 29.99,
-    //   imageUrl:
-    //       'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-    // ),
-    // Product(
-    //   id: 'p2',
-    //   title: 'Trousers',
-    //   description: 'A nice pair of trousers.',
-    //   price: 59.99,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
-    // ),
-    // Product(
-    //   id: 'p3',
-    //   title: 'Yellow Scarf',
-    //   description: 'Warm and cozy - exactly what you need for the winter.',
-    //   price: 19.99,
-    //   imageUrl:
-    //       'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-    // ),
-    // Product(
-    //   id: 'p4',
-    //   title: 'A Pan',
-    //   description: 'Prepare any meal you want.',
-    //   price: 49.99,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-    // ),
-  ];
+  List<Product> providerProducts;
 
   String authToken;
 
-  ProductsProvider({this.authToken = null});
+  ProductsProvider({this.authToken = null, this.providerProducts = const []});
 
   void setToken(String token) {
     this.authToken = token;
@@ -68,10 +35,12 @@ class ProductsProvider with ChangeNotifier {
           ));
         });
 
-        this._products = loadedProducts;
+        this.providerProducts = loadedProducts;
         notifyListeners();
       } catch (e) {
         print(e);
+        print('fetchProducts $e');
+
         throw (e);
       }
     }
@@ -85,19 +54,22 @@ class ProductsProvider with ChangeNotifier {
   }
 
   List<Product> get products {
-    return this._onlyFavorites ? this.favorites : [...this._products];
+    return this._onlyFavorites ? this.favorites : [...this.providerProducts];
   }
 
   List<Product> get allProducts {
-    return [...this._products];
+    return [...this.providerProducts];
   }
 
   List<Product> get favorites {
-    return [...this._products.where((Product product) => product.isFavorite)];
+    return [
+      ...this.providerProducts.where((Product product) => product.isFavorite)
+    ];
   }
 
   Future<void> addProduct(Product newProduct) async {
-    const url = 'https://flutter-course-69a71.firebaseio.com/products.json';
+    final url =
+        'https://flutter-course-69a71.firebaseio.com/products.json?auth=$authToken';
 
     try {
       http.Response response = await http.post(
@@ -122,16 +94,17 @@ class ProductsProvider with ChangeNotifier {
         id: firebaseId,
       );
 
-      this._products.add(product);
+      this.providerProducts.add(product);
       notifyListeners();
     } catch (error) {
-      print(error);
+      print('addProduct $error');
       throw (error);
     }
   }
 
   Future<void> updateProduct(String id, Product updatedProduct) async {
-    final url = 'https://flutter-course-69a71.firebaseio.com/products/$id.json';
+    final url =
+        'https://flutter-course-69a71.firebaseio.com/products/$id.json?auth=$authToken';
 
     try {
       await http.patch(url,
@@ -142,11 +115,12 @@ class ProductsProvider with ChangeNotifier {
             'price': updatedProduct.price
           }));
 
-      final productIndex =
-          this._products.indexWhere((Product product) => product.id == id);
+      final productIndex = this
+          .providerProducts
+          .indexWhere((Product product) => product.id == id);
 
       if (productIndex >= 0) {
-        this._products[productIndex] = updatedProduct;
+        this.providerProducts[productIndex] = updatedProduct;
         notifyListeners();
       }
     } catch (e) {
@@ -155,7 +129,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Product findById(String id) {
-    return this._products.firstWhere((Product product) {
+    return this.providerProducts.firstWhere((Product product) {
       return product.id == id;
     });
   }
@@ -165,7 +139,7 @@ class ProductsProvider with ChangeNotifier {
 
     await http.delete(url);
 
-    this._products.removeWhere((Product product) => product.id == id);
+    this.providerProducts.removeWhere((Product product) => product.id == id);
     notifyListeners();
   }
 }

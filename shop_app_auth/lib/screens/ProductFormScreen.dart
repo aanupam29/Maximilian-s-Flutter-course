@@ -70,9 +70,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
       if (product.id != null) {
         await provider.updateProduct(this.product.id, this.product);
-        setState(() {
-          _isLoading = false;
-        });
+
         Navigator.of(context).pop();
       } else {
         try {

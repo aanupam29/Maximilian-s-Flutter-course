@@ -8,7 +8,7 @@ class UserProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductsProvider productsProvider = Provider.of<ProductsProvider>(context);
-    List<Product> products = productsProvider.allProducts;
+    List<Product> products = productsProvider.userProducts;
 
     return Padding(
       padding: EdgeInsets.all(8),

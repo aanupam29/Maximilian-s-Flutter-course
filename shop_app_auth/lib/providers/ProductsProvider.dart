@@ -6,6 +6,7 @@ import 'package:shop_app/providers/Product.dart';
 
 class ProductsProvider with ChangeNotifier {
   List<Product> providerProducts;
+  List<Product> providerUserProducts;
 
   String authToken;
   String userId;
@@ -14,6 +15,7 @@ class ProductsProvider with ChangeNotifier {
     this.authToken = null,
     this.userId = null,
     this.providerProducts = const [],
+    this.providerUserProducts = const [],
   });
 
   void setToken(String token) {
@@ -36,9 +38,10 @@ class ProductsProvider with ChangeNotifier {
             json.decode(favoritesResponse.body);
 
         List<Product> loadedProducts = [];
+        List<Product> userLoadedProducts = [];
 
         responseData.forEach((String key, dynamic value) {
-          loadedProducts.add(Product(
+          final product = Product(
             id: key,
             description: value['description'],
             imageUrl: value['imageUrl'],
@@ -47,10 +50,16 @@ class ProductsProvider with ChangeNotifier {
             isFavorite: favoritesResponseData != null
                 ? favoritesResponseData[key] ?? false
                 : false,
-          ));
+          );
+          loadedProducts.add(product);
+
+          if (value['userId'] == userId) {
+            userLoadedProducts.add(product);
+          }
         });
 
         this.providerProducts = loadedProducts;
+        this.providerUserProducts = userLoadedProducts;
         notifyListeners();
       } catch (e) {
         print(e);
@@ -76,6 +85,10 @@ class ProductsProvider with ChangeNotifier {
     return [...this.providerProducts];
   }
 
+  List<Product> get userProducts {
+    return [...this.providerUserProducts];
+  }
+
   List<Product> get favorites {
     return [
       ...this.providerProducts.where((Product product) => product.isFavorite)
@@ -94,6 +107,7 @@ class ProductsProvider with ChangeNotifier {
           'description': newProduct.description,
           'price': newProduct.price,
           'imageUrl': newProduct.imageUrl,
+          'userId': this.userId
         }),
       );
 
@@ -108,6 +122,8 @@ class ProductsProvider with ChangeNotifier {
       );
 
       this.providerProducts.add(product);
+      this.providerUserProducts.add(product);
+
       notifyListeners();
     } catch (error) {
       print('addProduct $error');

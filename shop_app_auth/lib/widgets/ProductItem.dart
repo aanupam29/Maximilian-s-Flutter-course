@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/CartProvider.dart';
+import 'package:shop_app/providers/AuthProvider.dart';
 import 'package:shop_app/providers/Product.dart';
 import 'package:shop_app/screens/ProductDetailScreen.dart';
 
@@ -17,6 +18,8 @@ class _ProductItemState extends State<ProductItem> {
     Product product = Provider.of<Product>(context);
     CartProvider cartProvider =
         Provider.of<CartProvider>(context, listen: false);
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -45,7 +48,9 @@ class _ProductItemState extends State<ProductItem> {
                   onPressed: () async {
                     try {
                       setState(() => loading = true);
-                      await product.toggleFavoriteStatus();
+                      await product.toggleFavoriteStatus(
+                        authProvider.token,
+                      );
                       setState(() => loading = false);
                     } catch (e) {}
                   },

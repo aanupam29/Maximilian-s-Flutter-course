@@ -31,7 +31,13 @@ class ShopApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (BuildContext _) => CartProvider(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<AuthProvider, OrdersProvider>(
+          update: (BuildContext _, AuthProvider authProvider,
+                  OrdersProvider ordersProvider) =>
+              OrdersProvider(
+            token: authProvider.token,
+            providerOrders: ordersProvider.orders,
+          ),
           create: (BuildContext _) => OrdersProvider(),
         ),
       ],

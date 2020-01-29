@@ -19,16 +19,21 @@ class Order {
 }
 
 class OrdersProvider with ChangeNotifier {
-  List<Order> _orders = [];
+  List<Order> providerOrders;
 
   List<Order> get orders {
-    return [...this._orders];
+    return [...this.providerOrders];
   }
+
+  String token;
+
+  OrdersProvider({this.token = null, this.providerOrders = const []});
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     try {
       final DateTime datetime = DateTime.now();
-      const url = 'https://flutter-course-69a71.firebaseio.com/orders.json';
+      final url =
+          'https://flutter-course-69a71.firebaseio.com/orders.json?auth=$token';
       await http.post(url,
           body: json.encode({
             'amount': total,
@@ -45,7 +50,7 @@ class OrdersProvider with ChangeNotifier {
             'datetime': datetime.millisecondsSinceEpoch
           }));
 
-      this._orders.insert(
+      this.providerOrders.insert(
             0,
             Order(
               id: DateTime.now().toString(),
@@ -62,7 +67,8 @@ class OrdersProvider with ChangeNotifier {
   }
 
   Future<void> fetchOrders() async {
-    const url = 'https://flutter-course-69a71.firebaseio.com/orders.json';
+    final url =
+        'https://flutter-course-69a71.firebaseio.com/orders.json?auth=$token';
 
     try {
       final http.Response response = await http.get(url);
@@ -94,7 +100,7 @@ class OrdersProvider with ChangeNotifier {
         });
       }
 
-      this._orders = loadedOrders;
+      this.providerOrders = loadedOrders;
       notifyListeners();
     } catch (e) {
       print(e);

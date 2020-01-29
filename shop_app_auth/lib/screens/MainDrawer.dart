@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/AuthProvider.dart';
 import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
 import 'package:shop_app/providers/OrdersProvider.dart';
@@ -204,6 +205,20 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.of(context).pop();
               },
               title: Text('My Products'),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                AuthProvider authProvider =
+                    Provider.of<AuthProvider>(context, listen: false);
+
+                Navigator.of(context).pop();
+                authProvider.logout();
+              },
+              title: Text('Logout'),
             ),
           ],
         ),

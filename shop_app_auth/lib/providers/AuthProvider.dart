@@ -27,6 +27,13 @@ class AuthProvider with ChangeNotifier {
     return this.token != null ? this._userId : null;
   }
 
+  void logout() {
+    this._token = null;
+    this._expiryDate = null;
+    this._userId = null;
+    notifyListeners();
+  }
+
   Future<void> signUp(String email, String password) async {
     try {
       const url =

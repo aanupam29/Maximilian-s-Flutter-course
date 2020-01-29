@@ -23,6 +23,10 @@ class AuthProvider with ChangeNotifier {
     return null;
   }
 
+  String get userId {
+    return this.token != null ? this._userId : null;
+  }
+
   Future<void> signUp(String email, String password) async {
     try {
       const url =

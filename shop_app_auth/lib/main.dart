@@ -24,8 +24,10 @@ class ShopApp extends StatelessWidget {
           update: (BuildContext _, AuthProvider authProvider,
                   ProductsProvider productsProvider) =>
               ProductsProvider(
-                  authToken: authProvider.token,
-                  providerProducts: productsProvider.allProducts),
+            authToken: authProvider.token,
+            userId: authProvider.userId,
+            providerProducts: productsProvider.allProducts,
+          ),
           create: (BuildContext _) => ProductsProvider(),
         ),
         ChangeNotifierProvider(

@@ -49,8 +49,7 @@ class _ProductItemState extends State<ProductItem> {
                     try {
                       setState(() => loading = true);
                       await product.toggleFavoriteStatus(
-                        authProvider.token,
-                      );
+                          authProvider.token, authProvider.userId);
                       setState(() => loading = false);
                     } catch (e) {}
                   },

@@ -8,8 +8,13 @@ class ProductsProvider with ChangeNotifier {
   List<Product> providerProducts;
 
   String authToken;
+  String userId;
 
-  ProductsProvider({this.authToken = null, this.providerProducts = const []});
+  ProductsProvider({
+    this.authToken = null,
+    this.userId = null,
+    this.providerProducts = const [],
+  });
 
   void setToken(String token) {
     this.authToken = token;
@@ -19,9 +24,17 @@ class ProductsProvider with ChangeNotifier {
     if (this.authToken != null) {
       final url =
           'https://flutter-course-69a71.firebaseio.com/products.json?auth=$authToken';
+      final favoritesUrl =
+          'https://flutter-course-69a71.firebaseio.com/userFavorites/${userId}.json?auth=$authToken';
+
       try {
         final http.Response response = await http.get(url);
+        final http.Response favoritesResponse = await http.get(favoritesUrl);
+
         final Map<String, dynamic> responseData = json.decode(response.body);
+        final Map<String, dynamic> favoritesResponseData =
+            json.decode(favoritesResponse.body);
+
         List<Product> loadedProducts = [];
 
         responseData.forEach((String key, dynamic value) {
@@ -31,7 +44,9 @@ class ProductsProvider with ChangeNotifier {
             imageUrl: value['imageUrl'],
             price: value['price'],
             title: value['title'],
-            isFavorite: value['isFavorite'],
+            isFavorite: favoritesResponseData != null
+                ? favoritesResponseData[key] ?? false
+                : false,
           ));
         });
 
@@ -79,7 +94,6 @@ class ProductsProvider with ChangeNotifier {
           'description': newProduct.description,
           'price': newProduct.price,
           'imageUrl': newProduct.imageUrl,
-          'isFavorite': newProduct.isFavorite
         }),
       );
 
@@ -90,7 +104,6 @@ class ProductsProvider with ChangeNotifier {
         description: newProduct.description,
         price: newProduct.price,
         title: newProduct.title,
-        isFavorite: false,
         id: firebaseId,
       );
 

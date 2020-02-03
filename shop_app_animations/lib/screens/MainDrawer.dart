@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/helpers/CustomRoute.dart';
 import 'package:shop_app/providers/AuthProvider.dart';
 import 'package:shop_app/providers/CartProvider.dart';
 import 'package:shop_app/providers/ProductsProvider.dart';
@@ -114,7 +115,10 @@ class _MainDrawerState extends State<MainDrawer> {
               child: IconButton(
                 icon: Icon(Icons.shopping_cart),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(CartScreen.routePath);
+                  // Navigator.of(context).pushNamed(CartScreen.routePath);
+                  Navigator.of(context).push(CustomRoute(
+                    widgetBuilder: (BuildContext buildContext) => CartScreen(),
+                  ));
                 },
               ),
             )

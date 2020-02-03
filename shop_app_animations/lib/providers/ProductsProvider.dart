@@ -40,27 +40,29 @@ class ProductsProvider with ChangeNotifier {
         List<Product> loadedProducts = [];
         List<Product> userLoadedProducts = [];
 
-        responseData.forEach((String key, dynamic value) {
-          final product = Product(
-            id: key,
-            description: value['description'],
-            imageUrl: value['imageUrl'],
-            price: value['price'],
-            title: value['title'],
-            isFavorite: favoritesResponseData != null
-                ? favoritesResponseData[key] ?? false
-                : false,
-          );
-          loadedProducts.add(product);
+        if (responseData != null) {
+          responseData.forEach((String key, dynamic value) {
+            final product = Product(
+              id: key,
+              description: value['description'],
+              imageUrl: value['imageUrl'],
+              price: value['price'],
+              title: value['title'],
+              isFavorite: favoritesResponseData != null
+                  ? favoritesResponseData[key] ?? false
+                  : false,
+            );
+            loadedProducts.add(product);
 
-          if (value['userId'] == userId) {
-            userLoadedProducts.add(product);
-          }
-        });
+            if (value['userId'] == userId) {
+              userLoadedProducts.add(product);
+            }
+          });
 
-        this.providerProducts = loadedProducts;
-        this.providerUserProducts = userLoadedProducts;
-        notifyListeners();
+          this.providerProducts = loadedProducts;
+          this.providerUserProducts = userLoadedProducts;
+          notifyListeners();
+        }
       } catch (e) {
         print(e);
         print('fetchProducts $e');
@@ -164,11 +166,17 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = 'https://flutter-course-69a71.firebaseio.com/products/$id.json';
+    final url =
+        'https://flutter-course-69a71.firebaseio.com/products/$id.json?auth=$authToken';
 
-    await http.delete(url);
+    try {
+      await http.delete(url);
 
-    this.providerProducts.removeWhere((Product product) => product.id == id);
-    notifyListeners();
+      this.providerProducts.removeWhere((Product product) => product.id == id);
+      print('deleted');
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }
